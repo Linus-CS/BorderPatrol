@@ -5,12 +5,11 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import de.linuscs.Game.Game;
 import de.linuscs.Game.GameObject;
 
 public class Board extends GameObject {
 
-	ArrayList<Line> lines = new ArrayList<Line>();
+	public ArrayList<Line> lines = new ArrayList<Line>();
 	ArrayList<Box> boxes = new ArrayList<Box>();
 
 	int boardX;
@@ -26,7 +25,7 @@ public class Board extends GameObject {
 		border = new Border();
 
 		border.init();
-
+		
 		for (int y = 0; y < 1000; y += 100) {
 			for (int x = 0; x < 1000; x += 100) {
 				Box tempBox = new Box();
@@ -37,12 +36,15 @@ public class Board extends GameObject {
 			}
 		}
 
+		int ids = 0;
+		
 		for (int y = 0; y < 1000; y += 100) {
 			for (int x = 100; x < 1000; x += 100) {
 				Line tempLineVe = new Line();
 				tempLineVe.setX(x + boardX);
 				tempLineVe.setY(y + boardY);
-
+				tempLineVe.setId(ids++);
+				
 				lines.add(tempLineVe);
 			}
 		}
@@ -54,6 +56,8 @@ public class Board extends GameObject {
 				tempLineHo.setX(x + boardX);
 				tempLineHo.setY(y + boardY);
 				tempLineHo.rotate();
+				tempLineHo.setId(ids++);
+				
 				lines.add(tempLineHo);
 			}
 		} 

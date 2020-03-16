@@ -1,7 +1,10 @@
 package de.linuscs.Game;
 
+import java.awt.Graphics;
+
 import javax.swing.JPanel;
 
+import de.linuscs.Connection.ConnectionHandler;
 import de.linuscs.GameObjects.Board;
 
 public class Game extends JPanel implements Runnable {
@@ -9,21 +12,24 @@ public class Game extends JPanel implements Runnable {
 	private static final long serialVersionUID = 2027343941048492992L;
 
 	public static final int WIDTH = 1100, HEIGHT = 1100;
-	
+
+	ConnectionHandler connectionHandler;
 	Window window;
 	Thread thread;
 	public Handler handler;
 
 	private boolean running = false;
-	
+
 	public Game() {
+		connectionHandler = new ConnectionHandler();
 		window = new Window(WIDTH, HEIGHT, this);
 		handler = new Handler();
-		
+
 		handler.addGameObject(new Board());
 		
 		handler.init();
-		start();	
+
+		start();
 	}
 
 	public synchronized void start() {
@@ -39,7 +45,7 @@ public class Game extends JPanel implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void run() {
 		running = true;
@@ -60,7 +66,6 @@ public class Game extends JPanel implements Runnable {
 			}
 			if (running)
 				window.repaint();
-			render();
 			frames++;
 
 			if (System.currentTimeMillis() - timer > 1000) {
@@ -68,6 +73,8 @@ public class Game extends JPanel implements Runnable {
 				System.out.println("FPS: " + frames);
 				frames = 0;
 			}
+			
+			connectionHandler.waitForRequest();
 		}
 		stop();
 	}
@@ -75,8 +82,8 @@ public class Game extends JPanel implements Runnable {
 	private void update() {
 		handler.update();
 	}
-	
-	private void render() {
-		window.repaint();
+
+	public void render(Graphics g) {
+		handler.render(g);
 	}
 }

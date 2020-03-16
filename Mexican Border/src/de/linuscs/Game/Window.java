@@ -64,9 +64,11 @@ public class Window extends JPanel implements Runnable {
 		return new Dimension(width, height);
 	}
 
+	
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		game.handler.render(g);
+		game.render(g);
 	}
 }

@@ -2,9 +2,10 @@ package de.linuscs.Game;
 
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
+import java.io.DataOutputStream;
 
 public abstract class GameObject{
-
+	
 	public void init() {
 		// TODO Auto-generated method stub
 	}

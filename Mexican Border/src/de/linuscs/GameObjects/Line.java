@@ -11,6 +11,8 @@ public class Line {
 
 	private int height;
 	private int width;
+	
+	private int id;
 
 	Color color;
 	private Boolean activated;
@@ -45,7 +47,6 @@ public class Line {
 	}
 
 	public void mouseMoved(MouseEvent e) {
-		System.out.println(activated);
 		if (e.getX() > this.x + width && !activated) {
 			color = Color.blue;
 			return;
@@ -96,5 +97,13 @@ public class Line {
 
 	public void setY(int y) {
 		this.y = y + 5;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 }
