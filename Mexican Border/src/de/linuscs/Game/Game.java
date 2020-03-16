@@ -1,10 +1,13 @@
 package de.linuscs.Game;
 
 import java.awt.Graphics;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 
 import javax.swing.JPanel;
 
 import de.linuscs.Connection.ConnectionHandler;
+import de.linuscs.Entity.Player;
 import de.linuscs.GameObjects.Board;
 
 public class Game extends JPanel implements Runnable {
@@ -15,18 +18,21 @@ public class Game extends JPanel implements Runnable {
 
 	ConnectionHandler connectionHandler;
 	Window window;
-	Thread thread;
+	Player player;
 	public Handler handler;
+
+	Thread thread;
 
 	private boolean running = false;
 
 	public Game() {
-		connectionHandler = new ConnectionHandler();
+		player = new Player();
+		connectionHandler = new ConnectionHandler(this, player);
 		window = new Window(WIDTH, HEIGHT, this);
 		handler = new Handler();
 
 		handler.addGameObject(new Board());
-		
+
 		handler.init();
 
 		start();
@@ -70,10 +76,10 @@ public class Game extends JPanel implements Runnable {
 
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				System.out.println("FPS: " + frames);
+//				System.out.println("FPS: " + frames);
 				frames = 0;
 			}
-			
+
 			connectionHandler.waitForRequest();
 		}
 		stop();
@@ -85,5 +91,13 @@ public class Game extends JPanel implements Runnable {
 
 	public void render(Graphics g) {
 		handler.render(g);
+	}
+
+	public void writeIntFromDOS(DataOutputStream dos) {
+		handler.writeIntFromDOS(dos, player);
+	}
+
+	public void readIntToDis(DataInputStream dis) {
+		handler.readIntToDis(dis, player);
 	}
 }

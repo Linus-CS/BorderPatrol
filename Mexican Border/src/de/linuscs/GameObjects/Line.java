@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
+import de.linuscs.Entity.Player;
+
 public class Line {
 
 	private int x;
@@ -11,11 +13,15 @@ public class Line {
 
 	private int height;
 	private int width;
-	
+
 	private int id;
 
 	Color color;
-	private Boolean activated;
+	private boolean activated;
+	private boolean changeColor;
+	private boolean opponentColor;
+
+	Player player;
 
 	public Line() {
 		x = 0;
@@ -24,11 +30,16 @@ public class Line {
 		width = 10;
 
 		activated = false;
+		changeColor = false;
+		opponentColor = false;
 
 		color = Color.blue;
 	}
 
 	public void render(Graphics g) {
+		if (opponentColor)
+			color = Color.ORANGE;
+
 		g.setColor(color);
 
 		g.fillRect(x, y, width, height);
@@ -47,47 +58,49 @@ public class Line {
 	}
 
 	public void mouseMoved(MouseEvent e) {
-		if (e.getX() > this.x + width && !activated) {
+		if (e.getX() > this.x + width && !changeColor && !opponentColor) {
 			color = Color.blue;
 			return;
 		}
-		if (e.getX() < this.x && !activated) {
+		if (e.getX() < this.x && !changeColor && !opponentColor) {
 			color = Color.blue;
 			return;
 		}
-		if (e.getY() > this.y + height && !activated) {
+		if (e.getY() > this.y + height && !changeColor && !opponentColor) {
 			color = Color.blue;
 			return;
 		}
-		if (e.getY() < this.y && !activated) {
+		if (e.getY() < this.y && !changeColor && !opponentColor) {
 			color = Color.blue;
 			return;
 		}
 
-		if (!activated) {
+		if (!changeColor) {
 			color = Color.pink;
 		}
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		if (e.getX() > this.x + width && !activated) {
-			color = Color.blue;
+		if (e.getX() > this.x + width) {
+			activated = false;
 			return;
 		}
-		if (e.getX() < this.x && !activated) {
-			color = Color.blue;
+		if (e.getX() < this.x) {
+			activated = false;
 			return;
 		}
-		if (e.getY() > this.y + height && !activated) {
-			color = Color.blue;
+		if (e.getY() > this.y + height) {
+			activated = false;
 			return;
 		}
-		if (e.getY() < this.y && !activated) {
-			color = Color.blue;
+		if (e.getY() < this.y) {
+			activated = false;
 			return;
 		}
 
 		activated = true;
+		changeColor = true;
+
 		color = Color.GREEN;
 	}
 
@@ -98,12 +111,24 @@ public class Line {
 	public void setY(int y) {
 		this.y = y + 5;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public boolean getActivated() {
+		return activated;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	public void setOpponentColor(boolean opponentColor) {
+		this.opponentColor = opponentColor;
 	}
 }

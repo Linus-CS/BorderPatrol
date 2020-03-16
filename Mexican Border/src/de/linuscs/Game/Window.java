@@ -32,6 +32,7 @@ public class Window extends JPanel implements Runnable {
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				game.handler.mouseClicked(e);
+				game.connectionHandler.mouseClicked(e);
 			}
 		});
 		
