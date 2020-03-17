@@ -9,10 +9,13 @@ import javax.swing.JPanel;
 import de.linuscs.Connection.ConnectionHandler;
 import de.linuscs.Entity.Player;
 import de.linuscs.GameObjects.Board;
+import de.linuscs.Menu.Button;
 
 public class Game extends JPanel implements Runnable {
 
 	private static final long serialVersionUID = 2027343941048492992L;
+
+	private State state;
 
 	public static final int WIDTH = 1100, HEIGHT = 1100;
 
@@ -26,16 +29,26 @@ public class Game extends JPanel implements Runnable {
 	private boolean running = false;
 
 	public Game() {
-		player = new Player();
-		connectionHandler = new ConnectionHandler(this, player);
+		state = State.MENU;
 		window = new Window(WIDTH, HEIGHT, this);
-		handler = new Handler();
-
-		handler.addGameObject(new Board());
-
-		handler.init();
-
+		init();
 		start();
+	}
+
+	private void init() {
+		if (state == State.MENU) {
+			handler = new Handler();
+			handler.addGameObject(new Button(200, 100, 400, 400, "Game", State.GAME, this));
+			handler.init();
+		}
+		if (state == State.GAME) {
+			player = new Player();
+			connectionHandler = new ConnectionHandler(this, player);
+			handler = new Handler();
+
+			handler.addGameObject(new Board());
+			handler.init();
+		}
 	}
 
 	public synchronized void start() {
@@ -80,7 +93,8 @@ public class Game extends JPanel implements Runnable {
 				frames = 0;
 			}
 
-			connectionHandler.waitForRequest();
+			if (state == State.GAME && connectionHandler != null)
+				connectionHandler.waitForRequest();
 		}
 		stop();
 	}
@@ -99,5 +113,10 @@ public class Game extends JPanel implements Runnable {
 
 	public void readIntToDis(DataInputStream dis) {
 		handler.readIntToDis(dis, player);
+	}
+
+	public void setState(State state) {
+		this.state = state;
+		init();
 	}
 }

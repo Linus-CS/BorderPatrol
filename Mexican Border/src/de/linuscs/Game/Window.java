@@ -46,7 +46,7 @@ public class Window extends JPanel implements Runnable {
 
 	@Override
 	public void run() {
-		this.setBackground(Color.black);
+		this.setBackground(Color.DARK_GRAY);
 
 		window.setPreferredSize(new Dimension(width, height));
 		window.setMinimumSize(new Dimension(width, height));

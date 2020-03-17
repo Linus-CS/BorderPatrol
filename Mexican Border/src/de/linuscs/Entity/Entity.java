@@ -1,5 +1,5 @@
 package de.linuscs.Entity;
 
 public enum Entity {
-	Player1, Player2;
+	PLAYER1, PLAYER2;
 }

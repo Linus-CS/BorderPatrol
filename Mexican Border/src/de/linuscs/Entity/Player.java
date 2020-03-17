@@ -4,7 +4,7 @@ public class Player {
 
 	private String name;
 	private int id;
-	private Entity side = Entity.Player1;
+	private Entity side = Entity.PLAYER1;
 	
 	private boolean accepted = false;
 	private boolean yourTurn = false;

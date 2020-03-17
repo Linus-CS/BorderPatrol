@@ -20,7 +20,7 @@ public class Board extends GameObject {
 
 	int boardX;
 	int boardY;
-	
+
 	private Border border;
 
 	@Override
@@ -117,14 +117,18 @@ public class Board extends GameObject {
 
 	@Override
 	public void writeIntFromDOS(DataOutputStream dos, Player player) {
+		boolean missedLine = true;
 		try {
 			for (Line line : lines) {
 				if (line.getActivated()) {
 					dos.writeInt(line.getId());
+					missedLine = false;
 				}
 			}
-			dos.flush();
-			player.setYourTurn(false);
+			if (!missedLine) {
+				dos.flush();
+				player.setYourTurn(false);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -38,7 +38,7 @@ public class ConnectionHandler {
 	public void waitForRequest() {
 		// Waiting for request
 		update();
-		if (player.getSide() == Entity.Player2 && !player.isAccepted()) {
+		if (player.getSide() == Entity.PLAYER2 && !player.isAccepted()) {
 			listenForServerRequest();
 		}
 	}
@@ -77,7 +77,7 @@ public class ConnectionHandler {
 			e.printStackTrace();
 		}
 		player.setYourTurn(true);
-		player.setSide(Entity.Player2);
+		player.setSide(Entity.PLAYER2);
 	}
 
 	private void update() {
