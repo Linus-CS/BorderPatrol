@@ -45,6 +45,12 @@ public class Handler {
 			object.readIntToDis(dis, player);
 		}
 	}
+	
+	public void checkForVictory(Player player) {
+		for (GameObject object : gameObjects) {
+			object.checkForVictory(player);
+		}
+	}
 
 	public void mouseMoved(MouseEvent e) {
 		for (GameObject object : gameObjects) {

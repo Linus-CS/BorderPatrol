@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
-import de.linuscs.Entity.Player;
-
 public class Line {
 
 	private int x;
@@ -17,11 +15,10 @@ public class Line {
 	private int id;
 
 	Color color;
-	private boolean activated;
-	private boolean changeColor;
-	private boolean opponentColor;
 
-	Player player;
+	private boolean activated;
+	private boolean lightsOn;
+	private boolean opponentColor;
 
 	public Line() {
 		x = 0;
@@ -30,7 +27,7 @@ public class Line {
 		width = 10;
 
 		activated = false;
-		changeColor = false;
+		lightsOn = false;
 		opponentColor = false;
 
 		color = Color.blue;
@@ -58,24 +55,24 @@ public class Line {
 	}
 
 	public void mouseMoved(MouseEvent e) {
-		if (e.getX() > this.x + width && !changeColor && !opponentColor) {
+		if (e.getX() > this.x + width && !lightsOn && !opponentColor) {
 			color = Color.blue;
 			return;
 		}
-		if (e.getX() < this.x && !changeColor && !opponentColor) {
+		if (e.getX() < this.x && !lightsOn && !opponentColor) {
 			color = Color.blue;
 			return;
 		}
-		if (e.getY() > this.y + height && !changeColor && !opponentColor) {
+		if (e.getY() > this.y + height && !lightsOn && !opponentColor) {
 			color = Color.blue;
 			return;
 		}
-		if (e.getY() < this.y && !changeColor && !opponentColor) {
+		if (e.getY() < this.y && !lightsOn && !opponentColor) {
 			color = Color.blue;
 			return;
 		}
 
-		if (!changeColor) {
+		if (!lightsOn) {
 			color = Color.pink;
 		}
 	}
@@ -98,8 +95,8 @@ public class Line {
 			return;
 		}
 
+		lightsOn = true;
 		activated = true;
-		changeColor = true;
 
 		color = Color.GREEN;
 	}
@@ -120,12 +117,20 @@ public class Line {
 		this.id = id;
 	}
 
-	public boolean getActivated() {
+	public boolean isLightsOn() {
+		return lightsOn;
+	}
+
+	public boolean isActivated() {
 		return activated;
 	}
 
-	public void setPlayer(Player player) {
-		this.player = player;
+	public void setActivated(boolean activated) {
+		this.activated = activated;
+	}
+
+	public boolean isOpponentColor() {
+		return opponentColor;
 	}
 
 	public void setOpponentColor(boolean opponentColor) {

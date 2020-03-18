@@ -6,6 +6,8 @@ public class Player {
 	private int id;
 	private Entity side = Entity.PLAYER1;
 	
+	private boolean skip = false;
+	
 	private boolean accepted = false;
 	private boolean yourTurn = false;
 	
@@ -20,16 +22,24 @@ public class Player {
 	public boolean isAccepted() {
 		return accepted;
 	}
+	
 	public void setAccepted(boolean accepted) {
 		this.accepted = accepted;
 	}
+	
 	public boolean isYourTurn() {
 		return yourTurn;
 	}
+	
 	public void setYourTurn(boolean yourTurn) {
 		this.yourTurn = yourTurn;
 	}
 	
+	public boolean isSkip() {
+		return skip;
+	}
 	
-	
+	public void setSkip(boolean skip) {
+		this.skip = skip;
+	}
 }

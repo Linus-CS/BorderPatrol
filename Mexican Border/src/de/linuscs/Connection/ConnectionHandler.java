@@ -81,14 +81,14 @@ public class ConnectionHandler {
 	}
 
 	private void update() {
-		if (player.isYourTurn() == false) {
+		if (!player.isYourTurn()) {
 			if (dis != null)
 				readIntToDis();
 		}
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		if (player.isYourTurn() == true)
+		if (player.isYourTurn() && !player.isSkip())
 			writeIntFromDOS();
 	}
 

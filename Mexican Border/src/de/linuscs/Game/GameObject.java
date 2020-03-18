@@ -36,4 +36,11 @@ public abstract class GameObject{
 	public void readIntToDis(DataInputStream dis, Player player) {
 		// TODO Auto-generated method stub
 	}
+	
+	public void checkForVictory(Player player) {
+		// TODO Auto-generated method stub
+	}
+
+
+	
 }

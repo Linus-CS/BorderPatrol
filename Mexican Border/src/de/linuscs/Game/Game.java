@@ -44,8 +44,8 @@ public class Game extends JPanel implements Runnable {
 		if (state == State.GAME) {
 			player = new Player();
 			connectionHandler = new ConnectionHandler(this, player);
+			
 			handler = new Handler();
-
 			handler.addGameObject(new Board());
 			handler.init();
 		}
@@ -101,6 +101,7 @@ public class Game extends JPanel implements Runnable {
 
 	private void update() {
 		handler.update();
+		handler.checkForVictory(player);
 	}
 
 	public void render(Graphics g) {
