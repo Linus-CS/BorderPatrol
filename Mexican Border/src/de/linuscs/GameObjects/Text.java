@@ -28,5 +28,16 @@ public class Text{
 	public void setText(String text) {
 		this.text = text;
 	}
-
+	
+	public void setX(int x) {
+		this.x = x;
+	}
+	
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	public void setSize(int size) {
+		this.size = size;
+	}
 }

@@ -283,6 +283,7 @@ public class Board extends GameObject {
 
 		if (crosses == 100) {
 			gameEnd = true;
+			text.setX(220);
 			if (player.getOpponentScore() > 50) {
 				text.setText("You lost the game retard");
 			} else if (player.getOpponentScore() < 50) {

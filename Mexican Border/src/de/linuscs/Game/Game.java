@@ -45,7 +45,7 @@ public class Game extends JPanel implements Runnable {
 	private void init() {
 		if (state == State.MENU) {
 			handler = new Handler();
-			handler.addGameObject(new Button(200, 100, 400, 400, "Game", State.GAME, this));
+			handler.addGameObject(new Button(200, 100, 400, 400, "Play", State.GAME, this));
 			handler.init();
 		}
 		if (state == State.GAME) {
