@@ -20,7 +20,7 @@ public class Text{
 	}
 	
 	public void render(Graphics2D g2d) {
-		g2d.setColor(Color.BLACK);
+		g2d.setColor(Color.magenta);
 		g2d.setFont(new Font("Impact", Font.PLAIN, size));
 		g2d.drawString(text, x, y);
 	}

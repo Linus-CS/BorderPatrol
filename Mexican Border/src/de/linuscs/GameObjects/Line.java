@@ -26,6 +26,7 @@ public class Line {
 	private boolean activated;
 	private boolean lightsOn;
 	private boolean opponentColor;
+	private boolean glow;
 
 	public Line(Player player) {
 		this.player = player;
@@ -50,8 +51,10 @@ public class Line {
 
 		g.fillRect(x, y, width, height);
 
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		if(glow) {
+			g.setColor(Color.yellow);
+			g.drawRect(x , y , width , height );
+		}
 	}
 
 	public void rotate() {
@@ -149,5 +152,13 @@ public class Line {
 
 	public void setOpponentColor(boolean opponentColor) {
 		this.opponentColor = opponentColor;
+	}
+	
+    public boolean isGlow() {
+		return glow;
+	}
+    
+    public void setGlow(boolean glow) {
+		this.glow = glow;
 	}
 }

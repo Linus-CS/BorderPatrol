@@ -61,7 +61,6 @@ public class Board extends GameObject {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawRect(0, 0, 10, 10);
 
 		border.render(g);
 		for (Box box : boxes) {
@@ -116,13 +115,17 @@ public class Board extends GameObject {
 			char rotation = dis.readChar();
 
 			for (Line line : verLines) {
+				line.setGlow(false);
 				if (line.getId() == lineID && rotation == 'v') {
 					line.setOpponentColor(true);
+					line.setGlow(true);
 				}
 			}
 			for (Line line : horLines) {
+				line.setGlow(false);
 				if (line.getId() == lineID && rotation == 'h') {
 					line.setOpponentColor(true);
+					line.setGlow(true);
 				}
 			}
 
