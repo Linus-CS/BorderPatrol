@@ -23,7 +23,7 @@ public class Box {
 		x = 0;
 		y = 0;
 
-		color = Color.GREEN;
+		color = Color.BLUE;
 		
 		activated = false;
 		drawCross = false;
@@ -73,7 +73,7 @@ public class Box {
 
 	public void render(Graphics g) {
 		if (opponentColor)
-			color = Color.ORANGE;
+			color = Color.RED;
 		
 		g.setColor(color);
 
@@ -127,5 +127,9 @@ public class Box {
 
 	public void setOpponentColor(boolean opponentColor) {
 		this.opponentColor = opponentColor;
+	}
+	
+	public boolean isDrawCross() {
+		return drawCross;
 	}
 }

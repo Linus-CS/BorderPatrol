@@ -27,9 +27,14 @@ public class ConnectionHandler {
 
 	Player player;
 
-	public ConnectionHandler(Game game, Player player) {
+	public ConnectionHandler(Game game, Player player, int port, String ip) {
 		this.game = game;
 		this.player = player;
+
+		if (port != 0)
+			this.port = port;
+		if (ip != null)
+			this.ip = ip;
 
 		if (!connect())
 			initServer();
@@ -88,7 +93,7 @@ public class ConnectionHandler {
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		if (player.isYourTurn() && !player.isSkip())
+		if (player.isYourTurn())
 			writeIntFromDOS();
 	}
 

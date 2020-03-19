@@ -4,12 +4,16 @@ public class Player {
 
 	private String name;
 	private int id;
-	private Entity side = Entity.PLAYER1;
+	private int opponentScore;
 	
-	private boolean skip = false;
+	private Entity side = Entity.PLAYER1;
 	
 	private boolean accepted = false;
 	private boolean yourTurn = false;
+	
+	public void opponentPlusOne() {
+		opponentScore += 1;
+	}
 	
 	public Entity getSide() {
 		return side;
@@ -35,11 +39,7 @@ public class Player {
 		this.yourTurn = yourTurn;
 	}
 	
-	public boolean isSkip() {
-		return skip;
-	}
-	
-	public void setSkip(boolean skip) {
-		this.skip = skip;
+	public int getOpponentScore() {
+		return opponentScore;
 	}
 }

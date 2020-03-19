@@ -2,7 +2,12 @@ package de.linuscs.GameObjects;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
+import java.util.Scanner;
+
+import de.linuscs.Entity.Player;
 
 public class Line {
 
@@ -16,11 +21,15 @@ public class Line {
 
 	Color color;
 
+	Player player;
+
 	private boolean activated;
 	private boolean lightsOn;
 	private boolean opponentColor;
 
-	public Line() {
+	public Line(Player player) {
+		this.player = player;
+
 		x = 0;
 		y = 0;
 		height = 90;
@@ -30,16 +39,19 @@ public class Line {
 		lightsOn = false;
 		opponentColor = false;
 
-		color = Color.blue;
+		color = Color.WHITE;
 	}
 
 	public void render(Graphics g) {
 		if (opponentColor)
-			color = Color.ORANGE;
+			color = Color.RED;
 
 		g.setColor(color);
 
 		g.fillRect(x, y, width, height);
+
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 	}
 
 	public void rotate() {
@@ -56,19 +68,19 @@ public class Line {
 
 	public void mouseMoved(MouseEvent e) {
 		if (e.getX() > this.x + width && !lightsOn && !opponentColor) {
-			color = Color.blue;
+			color = Color.WHITE;
 			return;
 		}
 		if (e.getX() < this.x && !lightsOn && !opponentColor) {
-			color = Color.blue;
+			color = Color.WHITE;
 			return;
 		}
 		if (e.getY() > this.y + height && !lightsOn && !opponentColor) {
-			color = Color.blue;
+			color = Color.WHITE;
 			return;
 		}
 		if (e.getY() < this.y && !lightsOn && !opponentColor) {
-			color = Color.blue;
+			color = Color.WHITE;
 			return;
 		}
 
@@ -95,10 +107,12 @@ public class Line {
 			return;
 		}
 
-		lightsOn = true;
-		activated = true;
+		if (player.isYourTurn()) {
+			lightsOn = true;
+			activated = true;
 
-		color = Color.GREEN;
+			color = Color.BLUE;
+		}
 	}
 
 	public void setX(int x) {

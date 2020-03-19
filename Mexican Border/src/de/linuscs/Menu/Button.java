@@ -137,8 +137,8 @@ public class Button extends GameObject {
 		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		nameWidth = g2d.getFontMetrics().stringWidth(name);
 
-		g.drawImage(img, x, y, null);
-		g.drawString(name, x + width / 2 - nameWidth/ 2, y +height / 2);
+		g2d.drawImage(img, x, y, null);
+		g2d.drawString(name, x + width / 2 - nameWidth/ 2, y +height / 2);
 	}
 
 	@Override

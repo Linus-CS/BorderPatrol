@@ -1,10 +1,13 @@
 package de.linuscs.Game;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import de.linuscs.Connection.ConnectionHandler;
 import de.linuscs.Entity.Player;
@@ -25,12 +28,16 @@ public class Game extends JPanel implements Runnable {
 	public Handler handler;
 
 	Thread thread;
+	
+	private String ip;
+	private int port;
 
 	private boolean running = false;
 
 	public Game() {
 		state = State.MENU;
 		window = new Window(WIDTH, HEIGHT, this);
+
 		init();
 		start();
 	}
@@ -42,11 +49,16 @@ public class Game extends JPanel implements Runnable {
 			handler.init();
 		}
 		if (state == State.GAME) {
-			player = new Player();
-			connectionHandler = new ConnectionHandler(this, player);
+			System.out.println("Input IP: ");
+			ip = System.console().readLine();
+			System.out.println("Input port: ");
+			port = Integer.parseInt(System.console().readLine());
 			
+			player = new Player();
+			connectionHandler = new ConnectionHandler(this, player, port, ip);
+
 			handler = new Handler();
-			handler.addGameObject(new Board());
+			handler.addGameObject(new Board(player));
 			handler.init();
 		}
 	}
@@ -100,20 +112,23 @@ public class Game extends JPanel implements Runnable {
 	}
 
 	private void update() {
-		handler.update();
-		handler.checkForVictory(player);
+		if (handler != null)
+			handler.update();
 	}
 
 	public void render(Graphics g) {
-		handler.render(g);
+		if (handler != null)
+			handler.render(g);
 	}
 
 	public void writeIntFromDOS(DataOutputStream dos) {
-		handler.writeIntFromDOS(dos, player);
+		if (handler != null)
+			handler.writeIntFromDOS(dos);
 	}
 
 	public void readIntToDis(DataInputStream dis) {
-		handler.readIntToDis(dis, player);
+		if (handler != null)
+			handler.readIntToDis(dis);
 	}
 
 	public void setState(State state) {

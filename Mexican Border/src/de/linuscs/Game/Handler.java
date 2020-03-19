@@ -6,8 +6,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.ArrayList;
 
-import de.linuscs.Entity.Player;
-
 public class Handler {
 
 	ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
@@ -34,21 +32,15 @@ public class Handler {
 		gameObjects.add(object);
 	}
 
-	public void writeIntFromDOS(DataOutputStream dos, Player player) {
+	public void writeIntFromDOS(DataOutputStream dos) {
 		for (GameObject object : gameObjects) {
-			object.writeIntFromDOS(dos, player);
+			object.writeIntFromDOS(dos);
 		}
 	}
 
-	public void readIntToDis(DataInputStream dis, Player player) {
+	public void readIntToDis(DataInputStream dis) {
 		for (GameObject object : gameObjects) {
-			object.readIntToDis(dis, player);
-		}
-	}
-	
-	public void checkForVictory(Player player) {
-		for (GameObject object : gameObjects) {
-			object.checkForVictory(player);
+			object.readIntToDis(dis);
 		}
 	}
 

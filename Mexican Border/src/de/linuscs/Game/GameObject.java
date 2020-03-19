@@ -5,8 +5,6 @@ import java.awt.event.MouseEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-import de.linuscs.Entity.Player;
-
 public abstract class GameObject{
 	
 	public void init() {
@@ -29,18 +27,11 @@ public abstract class GameObject{
 		// TODO Auto-generated method stub
 	}
 	
-	public void writeIntFromDOS(DataOutputStream dos, Player player) {
+	public void writeIntFromDOS(DataOutputStream dos) {
 		// TODO Auto-generated method stub
 	}
 
-	public void readIntToDis(DataInputStream dis, Player player) {
+	public void readIntToDis(DataInputStream dis) {
 		// TODO Auto-generated method stub
 	}
-	
-	public void checkForVictory(Player player) {
-		// TODO Auto-generated method stub
-	}
-
-
-	
 }

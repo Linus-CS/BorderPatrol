@@ -32,32 +32,34 @@ public class Window extends JPanel implements Runnable {
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				game.handler.mouseClicked(e);
-				game.connectionHandler.mouseClicked(e);
+				if (game.connectionHandler != null)
+					game.connectionHandler.mouseClicked(e);
 			}
 		});
-		
+
 		addMouseMotionListener(new MouseMotionAdapter() {
 			public void mouseMoved(MouseEvent e) {
 				game.handler.mouseMoved(e);
 			}
 		});
-		
+
 	}
 
 	@Override
 	public void run() {
 		this.setBackground(Color.DARK_GRAY);
-
+		
 		window.setPreferredSize(new Dimension(width, height));
 		window.setMinimumSize(new Dimension(width, height));
 		window.setMaximumSize(new Dimension(width, height));
-		
+
 		window.setResizable(false);
 		window.setLocationRelativeTo(null);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		window.add(this);
 		window.pack();
+		window.setLayout(null);
 		window.setVisible(true);
 	}
 
@@ -65,8 +67,6 @@ public class Window extends JPanel implements Runnable {
 		return new Dimension(width, height);
 	}
 
-	
-	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
