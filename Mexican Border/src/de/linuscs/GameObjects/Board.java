@@ -25,17 +25,18 @@ public class Board extends GameObject {
 	private boolean gameEnd;
 
 	private Border border;
-
+	private Text text;
 	private Player player;
 
 	private ArrayList<Box> activatedBoxes = new ArrayList<Box>();
 
-	private Text text;
+	private boolean online;
 
-	public Board(Player player) {
+	public Board(Player player, boolean online) {
 		this.player = player;
+		this.online = online;
 	}
-
+	
 	@Override
 	public void init() {
 		boardX = 50;
@@ -47,6 +48,8 @@ public class Board extends GameObject {
 		border = new Border();
 
 		border.init();
+		
+		online = false;
 
 		createBoxesAndLines();
 		addNeigboursToBoxes();

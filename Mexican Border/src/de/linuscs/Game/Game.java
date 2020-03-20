@@ -5,9 +5,7 @@ import java.awt.Graphics;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import de.linuscs.Connection.ConnectionHandler;
 import de.linuscs.Entity.Player;
@@ -45,7 +43,8 @@ public class Game extends JPanel implements Runnable {
 	private void init() {
 		if (state == State.MENU) {
 			handler = new Handler();
-			handler.addGameObject(new Button(200, 100, 400, 400, "Play", State.GAME, this));
+			handler.addGameObject(new Button(200, 100, 400, 300, "Play", State.GAME, this));
+			handler.addGameObject(new Button(250, 100, 375, 500, "Local-COOP", State.COOP, this));
 			handler.init();
 		}
 		if (state == State.GAME) {
@@ -58,7 +57,7 @@ public class Game extends JPanel implements Runnable {
 			connectionHandler = new ConnectionHandler(this, player, port, ip);
 
 			handler = new Handler();
-			handler.addGameObject(new Board(player));
+			handler.addGameObject(new Board(player, true));
 			handler.init();
 		}
 	}
@@ -86,7 +85,6 @@ public class Game extends JPanel implements Runnable {
 		double ns = 1000000000 / amountOfTicks;
 		double delta = 0;
 		long timer = System.currentTimeMillis();
-		int frames = 0;
 		while (running) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
@@ -97,12 +95,9 @@ public class Game extends JPanel implements Runnable {
 			}
 			if (running)
 				window.repaint();
-			frames++;
 
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-//				System.out.println("FPS: " + frames);
-				frames = 0;
 			}
 
 			if (state == State.GAME && connectionHandler != null)
@@ -119,6 +114,13 @@ public class Game extends JPanel implements Runnable {
 	public void render(Graphics g) {
 		if (handler != null)
 			handler.render(g);
+		
+		if(state == State.COOP) {
+			
+			g.setColor(Color.pink);
+			g.drawString("Comming soon.", 365, 640);
+			g.drawString("Just open the game a secound time and use localhost as ip.", 10, 700);
+		}
 	}
 
 	public void writeIntFromDOS(DataOutputStream dos) {

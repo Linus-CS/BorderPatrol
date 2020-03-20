@@ -2,10 +2,7 @@ package de.linuscs.GameObjects;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
-import java.util.Scanner;
 
 import de.linuscs.Entity.Player;
 
