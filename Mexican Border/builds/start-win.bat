@@ -1,1 +1,1 @@
-java -jar C:\Users\Linus\Desktop\BorderPatrol.jar
+java -jar .\BorderPatrol.jar
