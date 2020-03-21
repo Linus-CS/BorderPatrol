@@ -11,6 +11,8 @@ import de.linuscs.Connection.ConnectionHandler;
 import de.linuscs.Entity.Player;
 import de.linuscs.GameObjects.Board;
 import de.linuscs.Menu.Button;
+import de.linuscs.Menu.DropDownMenu;
+import de.linuscs.Settings.Settings;
 
 public class Game extends JPanel implements Runnable {
 
@@ -18,7 +20,7 @@ public class Game extends JPanel implements Runnable {
 
 	private State state;
 
-	public static final int WIDTH = 500, HEIGHT = WIDTH;
+	public static final int WIDTH = generateWidth(), HEIGHT = WIDTH;
 
 	ConnectionHandler connectionHandler;
 	Window window;
@@ -33,6 +35,7 @@ public class Game extends JPanel implements Runnable {
 	private boolean running = false;
 
 	public Game() {
+
 		state = State.MENU;
 		window = new Window(WIDTH, HEIGHT, this);
 
@@ -45,7 +48,7 @@ public class Game extends JPanel implements Runnable {
 			handler = new Handler();
 			handler.addGameObject(new Button((int) (2 / 11f * WIDTH), (int) (1 / 11f * WIDTH), (int) (4 / 11f * WIDTH), (int) (3 / 11f * WIDTH), "Play", State.GAME, this));
 			handler.addGameObject(new Button((int) (25 / 110f * WIDTH), (int) (1 / 11f * WIDTH), (int) (375 / 1100f * WIDTH), (int) (5 / 11f * WIDTH), "Local COOP", State.COOP, this));
-			handler.addGameObject(new Button((int) (25 / 110f * WIDTH), (int) (1 / 11f * WIDTH), (int) (375 / 1100f * WIDTH), (int) (8 / 11f * WIDTH), "Resolution", State.COOP, this));
+			handler.addGameObject(new Button((int) (25 / 110f * WIDTH), (int) (1 / 11f * WIDTH), (int) (375 / 1100f * WIDTH), (int) (8 / 11f * WIDTH), "Resolution", State.RESO, this));
 			handler.init();
 		}
 		if (state == State.GAME) {
@@ -61,9 +64,18 @@ public class Game extends JPanel implements Runnable {
 			handler.addGameObject(new Board(player, true));
 			handler.init();
 		}
-		if(state == State.RESO) {
+		if (state == State.RESO) {
 			handler = new Handler();
-			handler.addGameObject(new Board(player, true));
+			DropDownMenu ddMenu = new DropDownMenu((int) (2 / 11f * WIDTH), (int) (3 / 11f * WIDTH), (int) (55 / 110f * WIDTH), (int) (1 / 11f * WIDTH), "resolutions");
+			ddMenu.addOption("700x700");
+			ddMenu.addOption("800x800");
+			ddMenu.addOption("900x900");
+			ddMenu.addOption("1000x1000");
+			ddMenu.addOption("1100x1100");
+			
+			handler.addGameObject(new Button((int) (2 / 11f * WIDTH), (int) (1 / 11f * WIDTH), (int) (4 / 11f * WIDTH), (int) (90 / 110f * WIDTH), "Restart"));
+			handler.addGameObject(ddMenu);
+
 			handler.init();
 		}
 	}
@@ -124,9 +136,24 @@ public class Game extends JPanel implements Runnable {
 		if (state == State.COOP) {
 
 			g.setColor(Color.pink);
-			g.drawString("Comming soon.", (int) (365/1100f * WIDTH), (int) (64/110f * WIDTH));
-			g.drawString("Just open the game a secound time and use localhost as ip.", (int) (1/110f * WIDTH), (int) (7/11f * WIDTH));
+			g.drawString("Comming soon.", (int) (365 / 1100f * WIDTH), (int) (64 / 110f * WIDTH));
+			g.drawString("Just open the game a secound time and use localhost as ip.", (int) (1 / 110f * WIDTH), (int) (7 / 11f * WIDTH));
 		}
+	}
+
+	private static int generateWidth() {
+		new Settings("settings");
+		String generateWidth = Settings.instance.getSetting("resolutions");
+		StringBuilder tempStringBuilder = new StringBuilder();
+		for (int i = 0; i < generateWidth.length(); i++) {
+			if (generateWidth.charAt(i) == 'x')
+				break;
+			else
+				tempStringBuilder.append(generateWidth.charAt(i));
+		}
+		generateWidth = tempStringBuilder.toString();
+
+		return Integer.parseInt(generateWidth);
 	}
 
 	public void writeIntFromDOS(DataOutputStream dos) {

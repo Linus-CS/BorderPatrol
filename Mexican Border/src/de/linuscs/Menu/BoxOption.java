@@ -1,4 +1,4 @@
-package de.linuscs.GameObjects;
+package de.linuscs.Menu;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -36,10 +36,10 @@ public class BoxOption {
 
 	public void init() {
 		if (baseColor == null) {
-			baseColor = Color.DARK_GRAY;
+			baseColor = Color.ORANGE;
 		}
 		if (hoverColor == null) {
-			hoverColor = Color.ORANGE;
+			hoverColor = Color.PINK;
 		}
 
 		if (textColor == null) {

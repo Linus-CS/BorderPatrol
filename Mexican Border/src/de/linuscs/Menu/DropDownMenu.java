@@ -1,4 +1,5 @@
-package de.linuscs.GameObjects;
+package de.linuscs.Menu;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
@@ -36,7 +37,7 @@ public class DropDownMenu extends GameObject {
 		this.y = (float) MenuY;
 		this.width = (float) width;
 		this.height = (float) height;
-		
+
 		this.setting = setting;
 	}
 
@@ -51,8 +52,7 @@ public class DropDownMenu extends GameObject {
 		}
 		dropDown = false;
 
-		choice = new BoxOption(Settings.instance.getSetting("resolution"), Math.round(MenuX), Math.round(MenuY),
-				Math.round(MenuWidth), Math.round(MenuHeight));
+		choice = new BoxOption(Settings.instance.getSetting(setting), Math.round(MenuX), Math.round(MenuY), Math.round(MenuWidth), Math.round(MenuHeight));
 		choice.init();
 	}
 
@@ -65,8 +65,8 @@ public class DropDownMenu extends GameObject {
 			MenuY = this.y;
 			MenuHeight = this.height;
 		}
-
-		choice.setName(Settings.instance.getSetting("resolution"));
+		if (choice != null)
+			choice.setName(Settings.instance.getSetting("resolutions"));
 	}
 
 	@Override
@@ -77,8 +77,7 @@ public class DropDownMenu extends GameObject {
 		}
 
 		// drop down if you hover over menu
-		if (e.getX() < this.MenuX || e.getX() > this.MenuX + this.MenuWidth || e.getY() < this.MenuY
-				|| e.getY() > this.MenuY + this.MenuHeight) {
+		if (e.getX() < this.MenuX || e.getX() > this.MenuX + this.MenuWidth || e.getY() < this.MenuY || e.getY() > this.MenuY + this.MenuHeight) {
 			dropDown = false;
 			return;
 		}
@@ -90,7 +89,7 @@ public class DropDownMenu extends GameObject {
 		for (BoxOption option : options) {
 			option.onClick(e);
 			if (option.isChoice()) {
-			 	Settings.instance.addSetting(setting, option.getName());
+				Settings.instance.addSetting(setting, option.getName());
 				option.setChoice(false);
 			}
 		}

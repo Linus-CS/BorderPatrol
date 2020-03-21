@@ -111,6 +111,16 @@ public class Button extends GameObject {
 		this.font = font;
 	}
 
+	public Button(int width, int height, int x, int y, String name) {
+		this.width = width;
+		this.height = height;
+
+		this.x = x;
+		this.y = y;
+
+		this.name = name;
+	}
+
 	private void loadImage(String imgName) {
 		try {
 			img = ImageIO.read(getClass().getResourceAsStream(imgName));
@@ -124,7 +134,7 @@ public class Button extends GameObject {
 		if (img == null)
 			loadImage("/defaultButton.png");
 		if (font == null)
-			font = new Font("Verdana", Font.BOLD, (int) 32);
+			font = new Font("Verdana", Font.BOLD, (int) (32 / 100f * height));
 		img = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 	}
 
@@ -151,7 +161,17 @@ public class Button extends GameObject {
 		if (e.getY() > y + height)
 			return;
 
-		game.setState(state);
+		if (state != null)
+			game.setState(state);
+		else {
+			try {
+				Runtime.getRuntime().exec("java -jar ./BorderPatrol.jar");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			System.exit(0);
+		}
+
 	}
 
 }
