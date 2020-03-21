@@ -1,5 +1,5 @@
 package de.linuscs.Game;
 
 public enum State {
-	MENU, GAME, COOP;
+	MENU, GAME, COOP, RESO;
 }

@@ -18,7 +18,7 @@ public class Game extends JPanel implements Runnable {
 
 	private State state;
 
-	public static final int WIDTH = 1100, HEIGHT = 1100;
+	public static final int WIDTH = 500, HEIGHT = WIDTH;
 
 	ConnectionHandler connectionHandler;
 	Window window;
@@ -26,7 +26,7 @@ public class Game extends JPanel implements Runnable {
 	public Handler handler;
 
 	Thread thread;
-	
+
 	private String ip;
 	private int port;
 
@@ -43,8 +43,9 @@ public class Game extends JPanel implements Runnable {
 	private void init() {
 		if (state == State.MENU) {
 			handler = new Handler();
-			handler.addGameObject(new Button(200, 100, 400, 300, "Play", State.GAME, this));
-			handler.addGameObject(new Button(250, 100, 375, 500, "Local-COOP", State.COOP, this));
+			handler.addGameObject(new Button((int) (2 / 11f * WIDTH), (int) (1 / 11f * WIDTH), (int) (4 / 11f * WIDTH), (int) (3 / 11f * WIDTH), "Play", State.GAME, this));
+			handler.addGameObject(new Button((int) (25 / 110f * WIDTH), (int) (1 / 11f * WIDTH), (int) (375 / 1100f * WIDTH), (int) (5 / 11f * WIDTH), "Local COOP", State.COOP, this));
+			handler.addGameObject(new Button((int) (25 / 110f * WIDTH), (int) (1 / 11f * WIDTH), (int) (375 / 1100f * WIDTH), (int) (8 / 11f * WIDTH), "Resolution", State.COOP, this));
 			handler.init();
 		}
 		if (state == State.GAME) {
@@ -52,10 +53,15 @@ public class Game extends JPanel implements Runnable {
 			ip = System.console().readLine();
 			System.out.println("Input port: ");
 			port = Integer.parseInt(System.console().readLine());
-			
+
 			player = new Player();
 			connectionHandler = new ConnectionHandler(this, player, port, ip);
 
+			handler = new Handler();
+			handler.addGameObject(new Board(player, true));
+			handler.init();
+		}
+		if(state == State.RESO) {
 			handler = new Handler();
 			handler.addGameObject(new Board(player, true));
 			handler.init();
@@ -114,12 +120,12 @@ public class Game extends JPanel implements Runnable {
 	public void render(Graphics g) {
 		if (handler != null)
 			handler.render(g);
-		
-		if(state == State.COOP) {
-			
+
+		if (state == State.COOP) {
+
 			g.setColor(Color.pink);
-			g.drawString("Comming soon.", 365, 640);
-			g.drawString("Just open the game a secound time and use localhost as ip.", 10, 700);
+			g.drawString("Comming soon.", (int) (365/1100f * WIDTH), (int) (64/110f * WIDTH));
+			g.drawString("Just open the game a secound time and use localhost as ip.", (int) (1/110f * WIDTH), (int) (7/11f * WIDTH));
 		}
 	}
 

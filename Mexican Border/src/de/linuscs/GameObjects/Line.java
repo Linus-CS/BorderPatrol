@@ -5,14 +5,15 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
 import de.linuscs.Entity.Player;
+import de.linuscs.Game.Game;
 
 public class Line {
 
 	private int x;
 	private int y;
 
-	private int height;
-	private int width;
+	private double height;
+	private double width;
 
 	private int id;
 
@@ -30,8 +31,8 @@ public class Line {
 
 		x = 0;
 		y = 0;
-		height = 90;
-		width = 10;
+		height = 9.0 / 110.0f * Game.WIDTH;
+		width = 1.0 / 110.0f * Game.WIDTH;
 
 		activated = false;
 		lightsOn = false;
@@ -46,20 +47,20 @@ public class Line {
 
 		g.setColor(color);
 
-		g.fillRect(x, y, width, height);
+		g.fillRect(x, y, (int) width, (int) height);
 
-		if(glow) {
+		if (glow) {
 			g.setColor(Color.yellow);
-			g.drawRect(x , y , width , height );
+			g.drawRect(x, y, (int) width, (int) height);
 		}
 	}
 
 	public void rotate() {
-		int oldHeight = height;
-		int oldWidth = width;
+		double oldHeight = height;
+		double oldWidth = width;
 
-		y = y - 10;
-		x = x + 10;
+		y = y - (int) (10 / 1100f * Game.WIDTH);
+		x = x + (int) (10 / 1100f * Game.WIDTH);
 
 		width = oldHeight;
 		height = oldWidth;
@@ -116,11 +117,11 @@ public class Line {
 	}
 
 	public void setX(int x) {
-		this.x = x - (width / 2);
+		this.x = x - ((int) width / 2);
 	}
 
 	public void setY(int y) {
-		this.y = y + 5;
+		this.y = y + (int) (5 / 1100f * Game.WIDTH);
 	}
 
 	public int getId() {
@@ -150,12 +151,12 @@ public class Line {
 	public void setOpponentColor(boolean opponentColor) {
 		this.opponentColor = opponentColor;
 	}
-	
-    public boolean isGlow() {
+
+	public boolean isGlow() {
 		return glow;
 	}
-    
-    public void setGlow(boolean glow) {
+
+	public void setGlow(boolean glow) {
 		this.glow = glow;
 	}
 }

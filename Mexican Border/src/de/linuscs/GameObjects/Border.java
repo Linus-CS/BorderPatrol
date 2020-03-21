@@ -7,27 +7,23 @@ import de.linuscs.Game.Game;
 
 public class Border {
 
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 
-	private int length;
+	private double length;
 
 	public void init() {
-		x = Game.WIDTH - (Game.WIDTH - 50);
-		y = Game.HEIGHT - (Game.HEIGHT - 20);
+		x = Game.WIDTH - (Game.WIDTH - (45 / 1100f) * Game.WIDTH);
+		y = Game.HEIGHT - (Game.HEIGHT - (1 / 110f) * Game.WIDTH);
 
-		length = 1000;
+		length = (10.0 / 11.0f) * Game.WIDTH;
 	}
 
 	public void render(Graphics g) {
 		g.setColor(Color.orange);
-		g.fillRect(x, y, 10, length);
-		g.fillRect(x, y, length, 10);
-		g.fillRect(x - 10 + length, y, 10, length);
-		g.fillRect(x, y - 10 + length, length, 10);
-	}
-	
-	public int getLength() {
-		return length;
+		g.fillRect((int) x, (int) y, (int) length / 100, (int) length);
+		g.fillRect((int) x, (int) y, (int) length, (int) length / 100);
+		g.fillRect((int) x - (int) length / 100 + (int) length, (int) y, (int) length / 100, (int) length);
+		g.fillRect((int) x, (int) y - (int) length / 100 + (int) length, (int) length, (int) length / 100);
 	}
 }

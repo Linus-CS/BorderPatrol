@@ -19,7 +19,7 @@ public class Button extends GameObject {
 
 	Game game;
 	State state;
-	
+
 	private int width, height;
 	private int x, y;
 	private Image img;
@@ -124,7 +124,7 @@ public class Button extends GameObject {
 		if (img == null)
 			loadImage("/defaultButton.png");
 		if (font == null)
-			font = new Font("Verdana", Font.BOLD, 32);
+			font = new Font("Verdana", Font.BOLD, (int) 32);
 		img = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 	}
 
@@ -137,7 +137,7 @@ public class Button extends GameObject {
 		nameWidth = g2d.getFontMetrics().stringWidth(name);
 
 		g2d.drawImage(img, x, y, null);
-		g2d.drawString(name, x + width / 2 - nameWidth/ 2, y +height / 2);
+		g2d.drawString(name, x + width / 2 - nameWidth / 2, y + height / 2);
 	}
 
 	@Override
@@ -150,7 +150,7 @@ public class Button extends GameObject {
 			return;
 		if (e.getY() > y + height)
 			return;
-		
+
 		game.setState(state);
 	}
 

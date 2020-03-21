@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import de.linuscs.Game.Game;
+
 public class Box {
 
 	private int x;
@@ -24,11 +26,11 @@ public class Box {
 		y = 0;
 
 		color = Color.BLUE;
-		
+
 		activated = false;
 		drawCross = false;
 		opponentColor = false;
-		
+
 	}
 
 	public void update() {
@@ -74,13 +76,14 @@ public class Box {
 	public void render(Graphics g) {
 		if (opponentColor)
 			color = Color.RED;
-		
+
 		g.setColor(color);
 
 		// cross
 		if (drawCross) {
-			g.drawLine(x, y, x + 100, y + 100);
-			g.drawLine(x + 100, y, x, y + 100);
+			double distance = (1.0 / 10.0f) * (10.0 / 11.0f) * Game.WIDTH;
+			g.drawLine(x, y, x + (int) distance, y + (int) distance);
+			g.drawLine(x + (int) distance, y, x, y + (int) distance);
 		}
 	}
 
@@ -128,7 +131,7 @@ public class Box {
 	public void setOpponentColor(boolean opponentColor) {
 		this.opponentColor = opponentColor;
 	}
-	
+
 	public boolean isDrawCross() {
 		return drawCross;
 	}

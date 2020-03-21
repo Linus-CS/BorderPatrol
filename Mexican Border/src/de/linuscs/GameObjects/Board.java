@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import de.linuscs.Entity.Player;
+import de.linuscs.Game.Game;
 import de.linuscs.Game.GameObject;
 
 public class Board extends GameObject {
@@ -20,8 +21,11 @@ public class Board extends GameObject {
 
 	String[] lineIds = new String[180];
 
-	int boardX;
-	int boardY;
+	double boardX;
+	double boardY;
+	double boardWidth;
+	double boardHeight;
+
 	private boolean gameEnd;
 
 	private Border border;
@@ -36,19 +40,21 @@ public class Board extends GameObject {
 		this.player = player;
 		this.online = online;
 	}
-	
+
 	@Override
 	public void init() {
-		boardX = 50;
-		boardY = 20;
+		boardX = (45 / 1100f) * Game.WIDTH;
+		boardY = (1 / 110f) * Game.WIDTH;
+		boardWidth = (10 / 11f) * Game.WIDTH;
+		boardHeight = (10 / 11f) * Game.HEIGHT;
 		gameEnd = false;
 
-		text = new Text(150, 500, 60, "Waiting for someone to connect ...");
+		text = new Text((int) (15 / 110f * Game.WIDTH), (int) (5 / 11f * Game.WIDTH), (int) (6 / 110f *  Game.WIDTH), "Waiting for someone to connect ...");
 
 		border = new Border();
 
 		border.init();
-		
+
 		online = false;
 
 		createBoxesAndLines();
@@ -207,13 +213,14 @@ public class Board extends GameObject {
 
 	private void createBoxesAndLines() {
 		int id = 1;
+		double distance = ((1 / 10f) * boardWidth);
 
-		for (int y = 0; y < 1000; y += 100) {
-			for (int x = 0; x < 1000; x += 100) {
+		for (double y = 0; y < boardHeight - 1; y += distance) {
+			for (double x = 0; x < boardWidth - 1; x += distance) {
 				Box tempBox = new Box();
 
-				tempBox.setX(x + boardX);
-				tempBox.setY(y + boardY);
+				tempBox.setX((int) (x + boardX));
+				tempBox.setY((int) (y + boardY));
 				tempBox.setId(id++);
 
 				boxes.add(tempBox);
@@ -222,12 +229,12 @@ public class Board extends GameObject {
 
 		id = 1;
 
-		for (int y = 0; y < 1000; y += 100) {
-			for (int x = 100; x < 1000; x += 100) {
+		for (double y = 0; y < boardHeight - 1; y += distance) {
+			for (double x = distance; x < boardWidth - 1; x += distance) {
 				Line tempLineVe = new Line(player);
-
-				tempLineVe.setX(x + boardX);
-				tempLineVe.setY(y + boardY);
+				
+				tempLineVe.setX((int) (x + boardX));
+				tempLineVe.setY((int) (y + boardY));
 				tempLineVe.setId(id++);
 
 				verLines.add(tempLineVe);
@@ -236,12 +243,12 @@ public class Board extends GameObject {
 
 		id = 1;
 
-		for (int y = 100; y < 1000; y += 100) {
-			for (int x = 0; x < 1000; x += 100) {
+		for (double y = distance; y < boardHeight - 1; y += distance) {
+			for (double x = 0; x < boardWidth - 1; x += distance) {
 				Line tempLineHo = new Line(player);
 
-				tempLineHo.setX(x + boardX);
-				tempLineHo.setY(y + boardY);
+				tempLineHo.setX((int) (x + boardX));
+				tempLineHo.setY((int) (y + boardY));
 				tempLineHo.rotate();
 				tempLineHo.setId(id++);
 
