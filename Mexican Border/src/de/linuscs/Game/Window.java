@@ -39,7 +39,8 @@ public class Window extends JPanel implements Runnable {
 
 		addMouseMotionListener(new MouseMotionAdapter() {
 			public void mouseMoved(MouseEvent e) {
-				game.handler.mouseMoved(e);
+				if (game.handler != null)
+					game.handler.mouseMoved(e);
 			}
 		});
 
@@ -48,7 +49,7 @@ public class Window extends JPanel implements Runnable {
 	@Override
 	public void run() {
 		this.setBackground(Color.DARK_GRAY);
-		
+
 		window.setPreferredSize(new Dimension(width, height));
 		window.setMinimumSize(new Dimension(width, height));
 		window.setMaximumSize(new Dimension(width, height));
@@ -70,6 +71,7 @@ public class Window extends JPanel implements Runnable {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+
 		game.render(g);
 	}
 }

@@ -36,14 +36,14 @@ public class BoxOption {
 
 	public void init() {
 		if (baseColor == null) {
-			baseColor = Color.ORANGE;
+			baseColor = Color.GRAY;
 		}
 		if (hoverColor == null) {
-			hoverColor = Color.PINK;
+			hoverColor = Color.BLACK;
 		}
 
 		if (textColor == null) {
-			textColor = Color.BLACK;
+			textColor = Color.WHITE;
 		}
 		color = baseColor;
 		choice = false;

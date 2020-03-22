@@ -2,9 +2,12 @@ package de.linuscs.Game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import de.linuscs.Connection.ConnectionHandler;
@@ -27,6 +30,8 @@ public class Game extends JPanel implements Runnable {
 	Player player;
 	public Handler handler;
 
+	Image img;
+	
 	Thread thread;
 
 	private String ip;
@@ -35,7 +40,12 @@ public class Game extends JPanel implements Runnable {
 	private boolean running = false;
 
 	public Game() {
-
+		try {
+			img = ImageIO.read(getClass().getResourceAsStream("/MAINMENU.png")).getScaledInstance(WIDTH, HEIGHT, Image.SCALE_SMOOTH);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		state = State.MENU;
 		window = new Window(WIDTH, HEIGHT, this);
 
@@ -46,9 +56,9 @@ public class Game extends JPanel implements Runnable {
 	private void init() {
 		if (state == State.MENU) {
 			handler = new Handler();
-			handler.addGameObject(new Button((int) (2 / 11f * WIDTH), (int) (1 / 11f * WIDTH), (int) (4 / 11f * WIDTH), (int) (3 / 11f * WIDTH), "Play", State.GAME, this));
-			handler.addGameObject(new Button((int) (25 / 110f * WIDTH), (int) (1 / 11f * WIDTH), (int) (375 / 1100f * WIDTH), (int) (5 / 11f * WIDTH), "Local COOP", State.COOP, this));
-			handler.addGameObject(new Button((int) (25 / 110f * WIDTH), (int) (1 / 11f * WIDTH), (int) (375 / 1100f * WIDTH), (int) (8 / 11f * WIDTH), "Resolution", State.RESO, this));
+			handler.addGameObject(new Button((int) (2 / 11f * WIDTH), (int) (1 / 11f * WIDTH), (int) (750 / 1100f * WIDTH), (int) (7 / 11f * WIDTH), "Play", State.GAME, this));
+			handler.addGameObject(new Button((int) (25 / 110f * WIDTH), (int) (5 / 110f * WIDTH), (int) (725 / 1100f * WIDTH), (int) (850 / 1100f * WIDTH), "Local COOP", State.COOP, this));
+			handler.addGameObject(new Button((int) (25 / 110f * WIDTH), (int) (5 / 110f * WIDTH), (int) (725 / 1100f * WIDTH), (int) (950 / 1100f * WIDTH), "Resolution", State.RESO, this));
 			handler.init();
 		}
 		if (state == State.GAME) {
@@ -66,14 +76,14 @@ public class Game extends JPanel implements Runnable {
 		}
 		if (state == State.RESO) {
 			handler = new Handler();
-			DropDownMenu ddMenu = new DropDownMenu((int) (2 / 11f * WIDTH), (int) (3 / 11f * WIDTH), (int) (55 / 110f * WIDTH), (int) (1 / 11f * WIDTH), "resolutions");
+			DropDownMenu ddMenu = new DropDownMenu((int) (25 / 110f * WIDTH), (int) (3 / 11f * WIDTH), (int) (55 / 110f * WIDTH), (int) (1 / 11f * WIDTH), "resolutions");
 			ddMenu.addOption("700x700");
 			ddMenu.addOption("800x800");
 			ddMenu.addOption("900x900");
 			ddMenu.addOption("1000x1000");
 			ddMenu.addOption("1100x1100");
 			
-			handler.addGameObject(new Button((int) (2 / 11f * WIDTH), (int) (1 / 11f * WIDTH), (int) (4 / 11f * WIDTH), (int) (90 / 110f * WIDTH), "Restart"));
+			handler.addGameObject(new Button((int) (2 / 11f * WIDTH), (int) (1 / 11f * WIDTH), (int) (42 / 110f * WIDTH), (int) (90 / 110f * WIDTH), "Restart"));
 			handler.addGameObject(ddMenu);
 
 			handler.init();
@@ -130,14 +140,17 @@ public class Game extends JPanel implements Runnable {
 	}
 
 	public void render(Graphics g) {
+		if(state == State.MENU) {
+			if (img != null)
+				g.drawImage(img, 0, 0, null);
+		}
 		if (handler != null)
 			handler.render(g);
 
 		if (state == State.COOP) {
-
 			g.setColor(Color.pink);
-			g.drawString("Comming soon.", (int) (365 / 1100f * WIDTH), (int) (64 / 110f * WIDTH));
-			g.drawString("Just open the game a secound time and use localhost as ip.", (int) (1 / 110f * WIDTH), (int) (7 / 11f * WIDTH));
+			g.drawString("Comming soon.", (int) (400 / 1100f * WIDTH), (int) (80 / 110f * WIDTH));
+			g.drawString("Just open the game a secound time and use localhost as ip.", (int) (28 / 110f * WIDTH), (int) (82 / 110f * WIDTH));
 		}
 	}
 
