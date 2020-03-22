@@ -56,9 +56,9 @@ public class Game extends JPanel implements Runnable {
 	private void init() {
 		if (state == State.MENU) {
 			handler = new Handler();
-			handler.addGameObject(new Button((int) (2 / 11f * WIDTH), (int) (1 / 11f * WIDTH), (int) (750 / 1100f * WIDTH), (int) (7 / 11f * WIDTH), "Play", State.GAME, this));
-			handler.addGameObject(new Button((int) (25 / 110f * WIDTH), (int) (5 / 110f * WIDTH), (int) (725 / 1100f * WIDTH), (int) (850 / 1100f * WIDTH), "Local COOP", State.COOP, this));
-			handler.addGameObject(new Button((int) (25 / 110f * WIDTH), (int) (5 / 110f * WIDTH), (int) (725 / 1100f * WIDTH), (int) (950 / 1100f * WIDTH), "Resolution", State.RESO, this));
+			handler.addGameObject(new Button("/Play.png", (int) (23/110f * WIDTH), (int) (2/11f * WIDTH), (int) (78/110f * WIDTH), (int) (6/11f * WIDTH), "", State.GAME, this));
+			handler.addGameObject(new Button("/Resolutions.png", (int) (325/1100f * WIDTH), (int) (2/11f * WIDTH), (int) (72/110f * WIDTH), (int) (74/110f * WIDTH), "", State.RESO, this));
+			handler.addGameObject(new Button("/COOP.png", (int) (325/1100f * WIDTH), (int) (2/11f * WIDTH), (int) (72/110f * WIDTH), (int) (85/110f * WIDTH), "", State.COOP, this));
 			handler.init();
 		}
 		if (state == State.GAME) {

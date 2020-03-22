@@ -14,13 +14,13 @@ public class Border {
 
 	public void init() {
 		x = Game.WIDTH - (Game.WIDTH - (45 / 1100f) * Game.WIDTH);
-		y = Game.HEIGHT - (Game.HEIGHT - (1 / 110f) * Game.WIDTH);
+		y = Game.HEIGHT - (Game.HEIGHT - (3 / 110f) * Game.WIDTH);
 
 		length = (10.0 / 11.0f) * Game.WIDTH;
 	}
 
 	public void render(Graphics g) {
-		g.setColor(Color.orange);
+		g.setColor(Color.BLACK);
 		g.fillRect((int) x, (int) y, (int) length / 100, (int) length);
 		g.fillRect((int) x, (int) y, (int) length, (int) length / 100);
 		g.fillRect((int) x - (int) length / 100 + (int) length, (int) y, (int) length / 100, (int) length);

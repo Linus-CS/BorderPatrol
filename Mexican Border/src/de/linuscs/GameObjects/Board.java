@@ -44,7 +44,7 @@ public class Board extends GameObject {
 	@Override
 	public void init() {
 		boardX = (45 / 1100f) * Game.WIDTH;
-		boardY = (1 / 110f) * Game.WIDTH;
+		boardY = (3 / 110f) * Game.WIDTH;
 		boardWidth = (10 / 11f) * Game.WIDTH;
 		boardHeight = (10 / 11f) * Game.HEIGHT;
 		gameEnd = false;

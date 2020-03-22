@@ -9,7 +9,7 @@
         <map/>
         <node name="Settings">
           <map>
-            <entry key="resolutions" value="700x700"/>
+            <entry key="resolutions" value="1100x1100"/>
           </map>
         </node>
       </node>

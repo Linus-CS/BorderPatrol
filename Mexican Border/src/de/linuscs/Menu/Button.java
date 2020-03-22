@@ -134,13 +134,14 @@ public class Button extends GameObject {
 		if (img == null)
 			loadImage("/defaultButton.png");
 		if (font == null)
-			font = new Font("Verdana", Font.BOLD, (int) (32 / 100f * height));
+			font = new Font("Times New Roman", Font.BOLD, (int) (32 / 100f * height));
+
 		img = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 	}
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.RED);
+		g.setColor(Color.WHITE);
 		g.setFont(font);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
