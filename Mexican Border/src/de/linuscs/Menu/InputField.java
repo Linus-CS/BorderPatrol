@@ -53,10 +53,10 @@ public class InputField extends GameObject {
 
 	@Override
 	public void init() {
-		lineX = (int) (x + (5 / 1100f * Game.WIDTH));
+		lineX = (int) (x + (10 / 1100f * Game.WIDTH));
 		baseX = lineX;
-		lineY = (int) (y + (5 / 1100f * Game.WIDTH));
-		lineHeight = (int) (height - (10 / 1100f * Game.WIDTH));
+		lineY = (int) (y + (10 / 1100f * Game.WIDTH));
+		lineHeight = (int) (height - (20 / 1100f * Game.WIDTH));
 
 		textX = lineX;
 		textY = lineY + lineHeight;
@@ -91,10 +91,10 @@ public class InputField extends GameObject {
 		}
 
 		g.setColor(Color.black);
-		
+
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setStroke(new BasicStroke(4));
-		g2d.drawRect((int) x, (int) y, (int) width, (int) height);
+		g.drawRect((int) x, (int) y, (int) width, (int) height);
 
 		if (text != null) {
 			g2d = (Graphics2D) g;
@@ -102,13 +102,13 @@ public class InputField extends GameObject {
 			g.drawString(text, textX, textY);
 		}
 
-		if (blink) 
+		if (blink)
 			g.drawLine(lineX, lineY, lineX, lineY + lineHeight);
 
 		if (label != null) {
 			g2d = (Graphics2D) g;
 			g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-			g.drawString(label, (int) (x - labelWidth - (5 / 1100f * Game.WIDTH)), (int) (lineY + lineHeight));
+			g.drawString(label, (int) (x - labelWidth - (10 / 1100f * Game.WIDTH)), (int) (lineY + lineHeight));
 		}
 	}
 
