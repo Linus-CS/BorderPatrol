@@ -3,6 +3,8 @@ package de.linuscs.Game;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -29,6 +31,7 @@ public class Window extends JPanel implements Runnable {
 		this.width = width;
 		this.height = height;
 
+		
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				game.handler.mouseClicked(e);
@@ -39,11 +42,25 @@ public class Window extends JPanel implements Runnable {
 
 		addMouseMotionListener(new MouseMotionAdapter() {
 			public void mouseMoved(MouseEvent e) {
+
 				if (game.handler != null)
 					game.handler.mouseMoved(e);
 			}
 		});
 
+		addKeyListener(new KeyListener() {
+			public void keyTyped(KeyEvent e) {
+				
+			}
+
+			public void keyPressed(KeyEvent e) {
+			}
+
+			public void keyReleased(KeyEvent e) {
+				if (game.handler != null)
+					game.handler.keyReleased(e);
+			}
+		});
 	}
 
 	@Override
@@ -58,6 +75,7 @@ public class Window extends JPanel implements Runnable {
 		window.setLocationRelativeTo(null);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		this.setFocusable(true);
 		window.add(this);
 		window.pack();
 		window.setLayout(null);

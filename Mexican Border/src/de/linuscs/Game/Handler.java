@@ -1,6 +1,7 @@
 package de.linuscs.Game;
 
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -53,6 +54,12 @@ public class Handler {
 	public void mouseClicked(MouseEvent e) {
 		for (GameObject object : gameObjects) {
 			object.mouseClicked(e);
+		}
+	}
+	
+	public void keyReleased(KeyEvent e) {
+		for (GameObject object : gameObjects) {
+			object.keyReleased(e);
 		}
 	}
 }

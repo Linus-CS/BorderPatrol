@@ -1,20 +1,19 @@
 package de.linuscs.Game;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import de.linuscs.Connection.ConnectionHandler;
 import de.linuscs.Entity.Player;
 import de.linuscs.GameObjects.Board;
+import de.linuscs.Menu.Background;
 import de.linuscs.Menu.Button;
 import de.linuscs.Menu.DropDownMenu;
+import de.linuscs.Menu.InputField;
 import de.linuscs.Settings.Settings;
 
 public class Game extends JPanel implements Runnable {
@@ -31,21 +30,18 @@ public class Game extends JPanel implements Runnable {
 	public Handler handler;
 
 	Image img;
-	
+
 	Thread thread;
 
 	private String ip;
 	private int port;
+	
+	InputField ipInputField;
+	InputField portInputField;
 
 	private boolean running = false;
 
 	public Game() {
-		try {
-			img = ImageIO.read(getClass().getResourceAsStream("/MAINMENU.png")).getScaledInstance(WIDTH, HEIGHT, Image.SCALE_SMOOTH);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
 		state = State.MENU;
 		window = new Window(WIDTH, HEIGHT, this);
 
@@ -56,17 +52,31 @@ public class Game extends JPanel implements Runnable {
 	private void init() {
 		if (state == State.MENU) {
 			handler = new Handler();
-			handler.addGameObject(new Button("/Play.png", (int) (23/110f * WIDTH), (int) (2/11f * WIDTH), (int) (78/110f * WIDTH), (int) (6/11f * WIDTH), "", State.GAME, this));
-			handler.addGameObject(new Button("/Resolutions.png", (int) (325/1100f * WIDTH), (int) (2/11f * WIDTH), (int) (72/110f * WIDTH), (int) (74/110f * WIDTH), "", State.RESO, this));
-			handler.addGameObject(new Button("/COOP.png", (int) (325/1100f * WIDTH), (int) (2/11f * WIDTH), (int) (72/110f * WIDTH), (int) (85/110f * WIDTH), "", State.COOP, this));
+			handler.addGameObject(new Background("/MAINMENU.png"));
+			handler.addGameObject(new Button("/Play.png", (int) (23 / 110f * WIDTH), (int) (2 / 11f * WIDTH), (int) (78 / 110f * WIDTH), (int) (6 / 11f * WIDTH), "", State.ADRESS, this));
+			handler.addGameObject(new Button("/Resolutions.png", (int) (325 / 1100f * WIDTH), (int) (2 / 11f * WIDTH), (int) (72 / 110f * WIDTH), (int) (74 / 110f * WIDTH), "", State.RESO, this));
+			handler.addGameObject(new Button("/COOP.png", (int) (325 / 1100f * WIDTH), (int) (2 / 11f * WIDTH), (int) (72 / 110f * WIDTH), (int) (85 / 110f * WIDTH), "", State.MENU, this));
+
+			handler.init();
+		}
+
+		if (state == State.ADRESS) {
+			handler = new Handler();
+			ipInputField = new InputField((int) (400 / 1100f * WIDTH), (int) (300 / 1100f * WIDTH), (int) (400 / 1100f * WIDTH), (int) (60 / 1100f * WIDTH));
+			portInputField = new InputField((int) (400 / 1100f * WIDTH), (int) (500 / 1100f * WIDTH), (int) (400 / 1100f * WIDTH), (int) (60 / 1100f * WIDTH));
+			
+			ipInputField.setLabel("Input IP:");
+			portInputField.setLabel("Input port:");
+			
+			handler.addGameObject(ipInputField);
+			handler.addGameObject(portInputField);
+			handler.addGameObject(new Button((int) (2 / 11f * WIDTH), (int) (1 / 11f * WIDTH), (int) (42 / 110f * WIDTH), (int) (90 / 110f * WIDTH), "Continue", State.GAME, this));
+
 			handler.init();
 		}
 		if (state == State.GAME) {
-			System.out.println("Input IP: ");
-			ip = System.console().readLine();
-			System.out.println("Input port: ");
-			port = Integer.parseInt(System.console().readLine());
-
+			ip = "localhost";
+			port = 222;
 			player = new Player();
 			connectionHandler = new ConnectionHandler(this, player, port, ip);
 
@@ -82,7 +92,7 @@ public class Game extends JPanel implements Runnable {
 			ddMenu.addOption("900x900");
 			ddMenu.addOption("1000x1000");
 			ddMenu.addOption("1100x1100");
-			
+
 			handler.addGameObject(new Button((int) (2 / 11f * WIDTH), (int) (1 / 11f * WIDTH), (int) (42 / 110f * WIDTH), (int) (90 / 110f * WIDTH), "Restart"));
 			handler.addGameObject(ddMenu);
 
@@ -135,23 +145,17 @@ public class Game extends JPanel implements Runnable {
 	}
 
 	private void update() {
+		if(ipInputField != null && portInputField != null && ipInputField.getText() != null && portInputField.getText() != null) {
+			ip = ipInputField.getText();
+			port = Integer.parseInt(portInputField.getText());
+		}
 		if (handler != null)
 			handler.update();
 	}
 
 	public void render(Graphics g) {
-		if(state == State.MENU) {
-			if (img != null)
-				g.drawImage(img, 0, 0, null);
-		}
 		if (handler != null)
 			handler.render(g);
-
-		if (state == State.COOP) {
-			g.setColor(Color.pink);
-			g.drawString("Comming soon.", (int) (400 / 1100f * WIDTH), (int) (80 / 110f * WIDTH));
-			g.drawString("Just open the game a secound time and use localhost as ip.", (int) (28 / 110f * WIDTH), (int) (82 / 110f * WIDTH));
-		}
 	}
 
 	private static int generateWidth() {

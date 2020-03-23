@@ -36,7 +36,7 @@ public class BoxOption {
 
 	public void init() {
 		if (baseColor == null) {
-			baseColor = Color.GRAY;
+			baseColor = Color.LIGHT_GRAY;
 		}
 		if (hoverColor == null) {
 			hoverColor = Color.BLACK;
