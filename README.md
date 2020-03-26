@@ -1,7 +1,7 @@
 # Border Patrol
 
 ## Download
-1. Go to https://www.mediafire.com/file/1p6zzatq4ilgva0/MexicanBorder-setup.exe/file 
+1. Go to http://www.mediafire.com/file/fbpaoo769l2y2wn/MexicanBorder-setup.exe/file
 2. Install the files.
 3. Double Click Mexican Border.
 4. You are ready to play.
