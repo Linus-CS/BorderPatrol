@@ -9,11 +9,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import de.linuscs.Entity.Entity;
 import de.linuscs.Entity.Player;
 import de.linuscs.Game.Game;
 import de.linuscs.Game.GameObject;
 
-public class Board extends GameObject {
+public class BoardSP extends GameObject {
 
 	public ArrayList<Line> verLines = new ArrayList<Line>();
 	public ArrayList<Line> horLines = new ArrayList<Line>();
@@ -34,11 +35,8 @@ public class Board extends GameObject {
 
 	private ArrayList<Box> activatedBoxes = new ArrayList<Box>();
 
-	private boolean online;
-
-	public Board(Player player, boolean online) {
+	public BoardSP(Player player) {
 		this.player = player;
-		this.online = online;
 	}
 
 	@Override
@@ -49,16 +47,17 @@ public class Board extends GameObject {
 		boardHeight = (10 / 11f) * Game.HEIGHT;
 		gameEnd = false;
 
-		text = new Text((int) (15 / 110f * Game.WIDTH), (int) (5 / 11f * Game.WIDTH), (int) (6 / 110f *  Game.WIDTH), "Waiting for someone to connect ...");
+		text = new Text((int) (15 / 110f * Game.WIDTH), (int) (5 / 11f * Game.WIDTH), (int) (6 / 110f * Game.WIDTH), "A Game of mexican border yaayy!!");
 
 		border = new Border();
 
 		border.init();
 
-		online = false;
-
 		createBoxesAndLines();
 		addNeigboursToBoxes();
+
+		player.setSide(Entity.PLAYER1);
+		player.setYourTurn(true);
 	}
 
 	@Override
@@ -80,12 +79,6 @@ public class Board extends GameObject {
 		}
 		for (Line line : horLines) {
 			line.render(g);
-		}
-
-		if (!player.isAccepted()) {
-			Graphics2D g2d = (Graphics2D) g;
-			g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-			text.render(g2d);
 		}
 
 		if (gameEnd) {
@@ -114,7 +107,59 @@ public class Board extends GameObject {
 			line.mouseClicked(e);
 		}
 
+		checkForLine();
 		checkForVictory();
+	}
+
+	private void checkForLine() {
+		boolean missedLine = true;
+
+		for (Line line : verLines) {
+			line.setGlow(false);
+			if (line.isActivated()) {
+				missedLine = false;
+				line.setActivated(false);
+				line.setGlow(true);
+				if (player.isYourTurn()) {
+					line.setLightsOn(true);
+				} else {
+					line.setOpponentColor(true);
+				}
+
+			}
+		}
+		for (Line line : horLines) {
+			line.setGlow(false);
+			if (line.isActivated()) {
+				missedLine = false;
+				line.setActivated(false);
+				line.setGlow(true);
+				if (player.isYourTurn()) {
+					line.setLightsOn(true);
+				} else {
+					line.setOpponentColor(true);
+				}
+			}
+		}
+
+		if (!missedLine) {
+			if (!checkForActivation()) {
+				if (player.isYourTurn()) {
+					player.setYourTurn(false);
+				} else {
+					player.setYourTurn(true);
+				}
+			} else {
+				for (Box activBox : activatedBoxes) {
+					if (!player.isYourTurn()) {
+						player.opponentPlusOne();
+						activBox.setOpponentColor(true);
+					}
+				}
+				activatedBoxes = new ArrayList<Box>();
+			}
+		}
+
 	}
 
 	@Override
@@ -232,7 +277,8 @@ public class Board extends GameObject {
 		for (double y = 0; y < boardHeight - 1; y += distance) {
 			for (double x = distance; x < boardWidth - 1; x += distance) {
 				Line tempLineVe = new Line(player);
-				
+				tempLineVe.setSP(true);
+
 				tempLineVe.setX((int) (x + boardX));
 				tempLineVe.setY((int) (y + boardY));
 				tempLineVe.setId(id++);
@@ -246,6 +292,7 @@ public class Board extends GameObject {
 		for (double y = distance; y < boardHeight - 1; y += distance) {
 			for (double x = 0; x < boardWidth - 1; x += distance) {
 				Line tempLineHo = new Line(player);
+				tempLineHo.setSP(true);
 
 				tempLineHo.setX((int) (x + boardX));
 				tempLineHo.setY((int) (y + boardY));

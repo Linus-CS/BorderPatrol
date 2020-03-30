@@ -26,6 +26,8 @@ public class Line {
 	private boolean opponentColor;
 	private boolean glow;
 
+	private boolean sp;
+
 	public Line(Player player) {
 		this.player = player;
 
@@ -37,6 +39,7 @@ public class Line {
 		activated = false;
 		lightsOn = false;
 		opponentColor = false;
+		sp = false;
 
 		color = Color.WHITE;
 	}
@@ -108,8 +111,7 @@ public class Line {
 			return;
 		}
 
-		if (player.isYourTurn()) {
-			lightsOn = true;
+		if (player.isYourTurn() || sp) {
 			activated = true;
 
 			color = Color.BLUE;
@@ -136,6 +138,10 @@ public class Line {
 		return lightsOn;
 	}
 
+	public void setLightsOn(boolean lightsOn) {
+		this.lightsOn = lightsOn;
+	}
+
 	public boolean isActivated() {
 		return activated;
 	}
@@ -158,5 +164,9 @@ public class Line {
 
 	public void setGlow(boolean glow) {
 		this.glow = glow;
+	}
+
+	public void setSP(boolean sp) {
+		this.sp = sp;
 	}
 }

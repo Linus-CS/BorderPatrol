@@ -47,7 +47,7 @@ public class BoxOption {
 		}
 		color = baseColor;
 		choice = false;
-		font = new Font("Minecraft", Font.BOLD, height);
+		font = new Font("Times New Roman", Font.BOLD, height);
 	}
 
 	public void render(Graphics g) {

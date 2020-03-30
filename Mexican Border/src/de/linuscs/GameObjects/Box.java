@@ -89,6 +89,7 @@ public class Box {
 			double distance = (1.0 / 10.0f) * (10.0 / 11.0f) * Game.WIDTH;
 			g.drawLine(x, y, x + (int) distance, y + (int) distance);
 			g.drawLine(x + (int) distance, y, x, y + (int) distance);
+			g2d.setStroke(new BasicStroke());
 		}
 	}
 

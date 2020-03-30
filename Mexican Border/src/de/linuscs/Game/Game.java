@@ -9,7 +9,8 @@ import javax.swing.JPanel;
 
 import de.linuscs.Connection.ConnectionHandler;
 import de.linuscs.Entity.Player;
-import de.linuscs.GameObjects.Board;
+import de.linuscs.GameObjects.BoardMP;
+import de.linuscs.GameObjects.BoardSP;
 import de.linuscs.Menu.Background;
 import de.linuscs.Menu.Button;
 import de.linuscs.Menu.DropDownMenu;
@@ -55,7 +56,7 @@ public class Game extends JPanel implements Runnable {
 			handler.addGameObject(new Background("/MAINMENU.png"));
 			handler.addGameObject(new Button("/Play.png", (int) (23 / 110f * WIDTH), (int) (2 / 11f * WIDTH), (int) (78 / 110f * WIDTH), (int) (6 / 11f * WIDTH), "", State.ADRESS, this));
 			handler.addGameObject(new Button("/Resolutions.png", (int) (325 / 1100f * WIDTH), (int) (2 / 11f * WIDTH), (int) (72 / 110f * WIDTH), (int) (74 / 110f * WIDTH), "", State.RESO, this));
-			handler.addGameObject(new Button("/COOP.png", (int) (325 / 1100f * WIDTH), (int) (2 / 11f * WIDTH), (int) (72 / 110f * WIDTH), (int) (85 / 110f * WIDTH), "", State.MENU, this));
+			handler.addGameObject(new Button("/COOP.png", (int) (325 / 1100f * WIDTH), (int) (2 / 11f * WIDTH), (int) (72 / 110f * WIDTH), (int) (85 / 110f * WIDTH), "", State.COOP, this));
 
 			handler.init();
 		}
@@ -75,13 +76,19 @@ public class Game extends JPanel implements Runnable {
 			handler.init();
 		}
 		if (state == State.GAME) {
-			ip = "localhost";
-			port = 222;
 			player = new Player();
 			connectionHandler = new ConnectionHandler(this, player, port, ip);
 
 			handler = new Handler();
-			handler.addGameObject(new Board(player, true));
+			handler.addGameObject(new BoardMP(player));
+			handler.init();
+		}
+		
+		if (state == State.COOP) {
+			player = new Player();
+
+			handler = new Handler();
+			handler.addGameObject(new BoardSP(player));
 			handler.init();
 		}
 		if (state == State.RESO) {
@@ -160,6 +167,9 @@ public class Game extends JPanel implements Runnable {
 
 	private static int generateWidth() {
 		new Settings("settings");
+		if(Settings.instance.getSetting("resolutions") == null) {
+			Settings.instance.addSetting("resolutions", "1000x1000");
+		}
 		String generateWidth = Settings.instance.getSetting("resolutions");
 		StringBuilder tempStringBuilder = new StringBuilder();
 		for (int i = 0; i < generateWidth.length(); i++) {
