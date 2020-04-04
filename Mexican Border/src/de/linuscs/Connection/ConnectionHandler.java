@@ -67,7 +67,7 @@ public class ConnectionHandler {
 			dos = new DataOutputStream(socket.getOutputStream());
 			dis = new DataInputStream(socket.getInputStream());
 		} catch (IOException e) {
-			System.out.println("Unable to connect to the ip address: " + ip + ":" + port + " | Starting a Server");
+			System.out.println("Unable to connect to the ip address: " + ip + ":" + port);
 			return false;
 		}
 		System.out.println("Successfuly connected to the server");

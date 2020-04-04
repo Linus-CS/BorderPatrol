@@ -167,7 +167,7 @@ public class Game extends JPanel implements Runnable {
 
 	private static int generateWidth() {
 		new Settings("settings");
-		if(Settings.instance.getSetting("resolutions") == null) {
+		if(Settings.instance.getSetting("resolutions") == "1") {
 			Settings.instance.addSetting("resolutions", "1000x1000");
 		}
 		String generateWidth = Settings.instance.getSetting("resolutions");

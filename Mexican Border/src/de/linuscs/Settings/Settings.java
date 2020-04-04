@@ -13,6 +13,7 @@ public class Settings {
 		
 		try {
 			pref.exportNode(new FileOutputStream(name + ".xml"));
+			System.out.println("Created " + name + ".xml");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
