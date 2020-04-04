@@ -17,10 +17,16 @@ public class MBHandler extends ClientHandler{
 		DataInputStream dis2 = clients.get(1).getDis();
 		
 		try {
+			dos1.writeChars("player1");
 			dos1.writeInt(dis2.readInt());
 			dos1.writeChar(dis2.readChar());
+			
+			dos1.writeChars("player2");
 			dos2.writeInt(dis1.readInt());
 			dos2.writeChar(dis1.readChar());
+			
+			dos1.flush();
+			dos2.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

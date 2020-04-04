@@ -47,7 +47,6 @@ public class Server {
 			serverSocket = new ServerSocket(port, 8, InetAddress.getByName(ip));
 			System.out.println("Started server on " + ip + ":" + port);
 		} catch (IOException e) {
-			System.out.println("EXCEPTION");
 			e.printStackTrace();
 		}
 	}
