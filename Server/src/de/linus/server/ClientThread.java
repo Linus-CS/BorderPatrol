@@ -9,7 +9,7 @@ public class ClientThread extends Thread {
 
 	private Socket socket;
 	private ClientHandler clientHandler;
-	
+
 	private DataOutputStream dos;
 	private DataInputStream dis;
 
@@ -26,16 +26,14 @@ public class ClientThread extends Thread {
 		} catch (IOException e) {
 			return;
 		}
-		
-		while(true) {
-			clientHandler.connectClients();
-		}
+
+		clientHandler.connectClients();
 	}
-	
+
 	public DataOutputStream getDos() {
 		return dos;
 	}
-	
+
 	public DataInputStream getDis() {
 		return dis;
 	}

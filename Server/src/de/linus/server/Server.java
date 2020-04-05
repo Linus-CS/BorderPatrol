@@ -54,7 +54,7 @@ public class Server {
 	private void listenForServerRequest() {
 		socket = null;
 
-		while (!clientHandler.borderGameLimit()) {
+		while (!clientHandler.limit()) {
 			try {
 				System.out.println("Waiting for someone to connect. Request to join send.");
 				socket = serverSocket.accept();

@@ -10,6 +10,7 @@ public class Player {
 	
 	private boolean accepted = false;
 	private boolean yourTurn = false;
+	private boolean host = false;
 	
 	public void opponentPlusOne() {
 		opponentScore += 1;
@@ -41,5 +42,13 @@ public class Player {
 	
 	public int getOpponentScore() {
 		return opponentScore;
+	}
+	
+	public boolean isHost() {
+		return host;
+	}
+	
+	public void setHost(boolean host) {
+		this.host = host;
 	}
 }

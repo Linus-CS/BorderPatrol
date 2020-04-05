@@ -36,7 +36,7 @@ public class Game extends JPanel implements Runnable {
 
 	private String ip;
 	private int port;
-	
+
 	InputField ipInputField;
 	InputField portInputField;
 
@@ -72,6 +72,7 @@ public class Game extends JPanel implements Runnable {
 			handler.addGameObject(ipInputField);
 			handler.addGameObject(portInputField);
 			handler.addGameObject(new Button((int) (2 / 11f * WIDTH), (int) (1 / 11f * WIDTH), (int) (42 / 110f * WIDTH), (int) (90 / 110f * WIDTH), "Continue", State.GAME, this));
+			handler.addGameObject(new Button("/Back.png", (int) (50/1100f * WIDTH),(int) (50/1100f * WIDTH),(int) (20/1100f * WIDTH),(int) (20/1100f * WIDTH),"", State.MENU, this));
 
 			handler.init();
 		}
@@ -86,8 +87,9 @@ public class Game extends JPanel implements Runnable {
 		
 		if (state == State.COOP) {
 			player = new Player();
-
 			handler = new Handler();
+			
+			handler.addGameObject(new Button("/Back.png", (int) (30/1100f * WIDTH),(int) (30/1100f * WIDTH),(int) (10/1100f * WIDTH),(int) (10/1100f * WIDTH),"", State.MENU, this));
 			handler.addGameObject(new BoardSP(player));
 			handler.init();
 		}
@@ -100,8 +102,10 @@ public class Game extends JPanel implements Runnable {
 			ddMenu.addOption("1000x1000");
 			ddMenu.addOption("1100x1100");
 
-			handler.addGameObject(new Button((int) (2 / 11f * WIDTH), (int) (1 / 11f * WIDTH), (int) (42 / 110f * WIDTH), (int) (90 / 110f * WIDTH), "Restart"));
 			handler.addGameObject(ddMenu);
+			
+			handler.addGameObject(new Button((int) (2 / 11f * WIDTH), (int) (1 / 11f * WIDTH), (int) (42 / 110f * WIDTH), (int) (90 / 110f * WIDTH), "Restart"));
+			handler.addGameObject(new Button("/Back.png", (int) (50/1100f * WIDTH),(int) (50/1100f * WIDTH),(int) (20/1100f * WIDTH),(int) (20/1100f * WIDTH),"", State.MENU, this));
 
 			handler.init();
 		}
@@ -152,7 +156,7 @@ public class Game extends JPanel implements Runnable {
 	}
 
 	private void update() {
-		if(ipInputField != null && portInputField != null && ipInputField.getText() != null && portInputField.getText() != null) {
+		if (ipInputField != null && portInputField != null && ipInputField.getText() != null && portInputField.getText() != null) {
 			ip = ipInputField.getText();
 			port = Integer.parseInt(portInputField.getText());
 		}
@@ -167,7 +171,7 @@ public class Game extends JPanel implements Runnable {
 
 	private static int generateWidth() {
 		new Settings("settings");
-		if(Settings.instance.getSetting("resolutions") == "1") {
+		if (Settings.instance.getSetting("resolutions") == "1") {
 			Settings.instance.addSetting("resolutions", "1000x1000");
 		}
 		String generateWidth = Settings.instance.getSetting("resolutions");

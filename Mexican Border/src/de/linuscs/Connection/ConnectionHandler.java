@@ -43,7 +43,7 @@ public class ConnectionHandler {
 	public void waitForRequest() {
 		// Waiting for request
 		update();
-		if (player.getSide() == Entity.PLAYER2 && !player.isAccepted()) {
+		if (player.getSide() == Entity.PLAYER2 && !player.isAccepted() && player.isHost()) {
 			listenForServerRequest();
 		}
 	}
@@ -86,6 +86,7 @@ public class ConnectionHandler {
 	}
 
 	private void update() {
+		
 		if (!player.isYourTurn()) {
 			if (dis != null)
 				readIntToDis();

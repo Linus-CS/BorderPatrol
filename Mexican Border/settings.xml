@@ -8,7 +8,9 @@
       <node name="linuscs">
         <map/>
         <node name="Settings">
-          <map/>
+          <map>
+            <entry key="resolutions" value="1100x1100"/>
+          </map>
         </node>
       </node>
     </node>

@@ -6,7 +6,7 @@ public abstract class ClientHandler {
 
 	protected ArrayList<ClientThread> clients = new ArrayList<ClientThread>();
 	
-	public boolean borderGameLimit() {
+	public boolean limit() {
 		return false;
 	}
 	
