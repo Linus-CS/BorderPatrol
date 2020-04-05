@@ -43,7 +43,7 @@ public class ConnectionHandler {
 	public void waitForRequest() {
 		// Waiting for request
 		update();
-		if (player.getSide() == Entity.PLAYER2 && !player.isAccepted() && player.isHost()) {
+		if (player.getSide() == Entity.PLAYER1 && !player.isAccepted() && player.isHost()) {
 			listenForServerRequest();
 		}
 	}
@@ -66,8 +66,24 @@ public class ConnectionHandler {
 			socket = new Socket(ip, port);
 			dos = new DataOutputStream(socket.getOutputStream());
 			dis = new DataInputStream(socket.getInputStream());
+
+			StringBuffer inputLine = new StringBuffer();
+			char tmp = ' ';
+			while ((tmp = dis.readChar()) != ' ') {
+				inputLine.append(tmp);
+				System.out.println(tmp);
+			}
+
+			if (inputLine.toString() != null && inputLine.toString() == "player1") {
+				player.setYourTurn(true);
+				player.setSide(Entity.PLAYER1);
+			}else {
+				player.setSide(Entity.PLAYER2);
+			}
 		} catch (IOException e) {
 			System.out.println("Unable to connect to the ip address: " + ip + ":" + port);
+			System.out.println("Starting a server...");
+			player.setHost(true);
 			return false;
 		}
 		System.out.println("Successfuly connected to the server");
@@ -82,11 +98,10 @@ public class ConnectionHandler {
 			e.printStackTrace();
 		}
 		player.setYourTurn(true);
-		player.setSide(Entity.PLAYER2);
+		player.setSide(Entity.PLAYER1);
 	}
 
 	private void update() {
-		
 		if (!player.isYourTurn()) {
 			if (dis != null)
 				readIntToDis();

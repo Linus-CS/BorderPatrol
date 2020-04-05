@@ -18,10 +18,8 @@ public class MBHandler extends ClientHandler {
 
 		try {
 			dos1.writeChars("player1");
-			dos2.writeChars("player2");
 
 			dos1.flush();
-			dos2.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -37,8 +35,8 @@ public class MBHandler extends ClientHandler {
 				intValue1 = dis1.readInt();
 				charValue1 = dis1.readChar(); 
 				
-				intValue2 = dis1.readInt();
-				charValue2 = dis1.readChar(); 
+				intValue2 = dis2.readInt();
+				charValue2 = dis2.readChar(); 
 				
 				dos1.writeInt(intValue2);
 				dos1.writeChar(charValue2);
