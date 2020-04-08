@@ -8,23 +8,29 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+
+import de.linus.mexicanBorder.Game;
 
 public class Server {
 
 	private ServerSocket serverSocket;
 	private Socket socket;
 
-	ClientHandler clientHandler;
-
 	private String ip;
 	private int port;
 
-	public Server(ClientHandler clientHandler) throws UnknownHostException {
-		this.clientHandler = (ClientHandler) clientHandler;
+	private ArrayList<ClientThread> clients = new ArrayList<ClientThread>();
+	private ArrayList<Game> games = new ArrayList<Game>();
+
+	private int counterGames;
+	private int counterClients;
+
+	public Server() throws UnknownHostException {
 
 		ip = InetAddress.getLocalHost().getHostAddress();
 		System.out.println("Starting a Server on " + ip);
-		System.out.println("Input port on which server is listening for request: ");
+		System.out.println("Input port on which server should listen for request: ");
 
 		while (port == 0) {
 			try {
@@ -52,21 +58,34 @@ public class Server {
 	}
 
 	private void listenForServerRequest() {
-		socket = null;
-
-		while (!clientHandler.limit()) {
+		while (true) {
+			socket = null;
 			try {
 				System.out.println("Waiting for someone to connect. Request to join send.");
 				socket = serverSocket.accept();
-				System.out.println("Client " + socket.getInetAddress().getHostName()
-						+ " has accepted request to join. We have accepeted client.");
+				System.out.println("Client " + socket.getInetAddress().getHostName() + " has accepted request to join. We have accepeted client.");
+				clients.add(new ClientThread(socket));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			clients.get(counterClients).sendChar('s');
+			if (clients.size() % 2 == 0) {
+				counterGames++;
+				int clientID = counterGames * 2;
 
-			clientHandler.addClient(new ClientThread(socket, clientHandler));
+				clients.get(counterClients).sendBoolean(false);
+				clients.get(counterClients).flush();
+				clients.get(counterClients - 1).sendBoolean(true);
+				clients.get(counterClients - 1).flush();
+
+				games.add(new Game(clients.get(clientID - 2), clients.get(clientID - 1)));
+				System.out.println("Game " + counterGames + " has been created");
+			} else {
+				clients.get(counterClients).sendBoolean(true);
+				clients.get(counterClients).flush();
+			}
+			counterClients++;
 		}
-		clientHandler.start();
 	}
 
 	private void commandInput() {

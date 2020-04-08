@@ -54,6 +54,8 @@ public class Window extends JPanel implements Runnable {
 			}
 
 			public void keyPressed(KeyEvent e) {
+				if (game.handler != null)
+					game.handler.keyPressed(e);
 			}
 
 			public void keyReleased(KeyEvent e) {

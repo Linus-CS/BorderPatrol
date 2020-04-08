@@ -39,4 +39,8 @@ public abstract class GameObject{
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 	}
+	
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+	}
 }

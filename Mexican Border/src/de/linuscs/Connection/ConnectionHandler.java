@@ -55,6 +55,8 @@ public class ConnectionHandler {
 			dos = new DataOutputStream(socket.getOutputStream());
 			dis = new DataInputStream(socket.getInputStream());
 			player.setAccepted(true);
+			dos.writeChar('p');
+			dos.flush();
 			System.out.println("Client has accepted request join and we have accepetd");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -62,32 +64,44 @@ public class ConnectionHandler {
 	}
 
 	private boolean connect() {
+		char peer = ' ';
+
 		try {
 			socket = new Socket(ip, port);
 			dos = new DataOutputStream(socket.getOutputStream());
 			dis = new DataInputStream(socket.getInputStream());
 
-			StringBuffer inputLine = new StringBuffer();
-			char tmp = ' ';
-			while ((tmp = dis.readChar()) != ' ') {
-				inputLine.append(tmp);
-				System.out.println(tmp);
-			}
-
-			if (inputLine.toString() != null && inputLine.toString() == "player1") {
-				player.setYourTurn(true);
-				player.setSide(Entity.PLAYER1);
-			}else {
-				player.setSide(Entity.PLAYER2);
-			}
+			peer = dis.readChar();
 		} catch (IOException e) {
 			System.out.println("Unable to connect to the ip address: " + ip + ":" + port);
 			System.out.println("Starting a server...");
 			player.setHost(true);
 			return false;
 		}
+
 		System.out.println("Successfuly connected to the server");
-		player.setAccepted(true);
+		if (peer == 'p') {
+			player.setAccepted(true);
+			return true;
+		}
+
+		try {
+			if (dis.readBoolean()) {
+				player.setYourTurn(true);
+				player.setSide(Entity.PLAYER1);
+				System.out.println("You are Player 1");
+				if (dis.readBoolean())
+					player.setAccepted(true);
+			} else {
+				System.out.println("You are Player 2");
+				player.setSide(Entity.PLAYER2);
+				player.setAccepted(true);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		return true;
 	}
 

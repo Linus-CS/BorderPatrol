@@ -8,33 +8,101 @@ import java.net.Socket;
 public class ClientThread extends Thread {
 
 	private Socket socket;
-	private ClientHandler clientHandler;
 
 	private DataOutputStream dos;
 	private DataInputStream dis;
 
-	public ClientThread(Socket clientSocket, ClientHandler clientHandler) {
+	private int inNumber;
+	private char inCharakter;
+	
+	private int sendAmount;
+
+	public ClientThread(Socket clientSocket) {
 		this.socket = clientSocket;
-		this.clientHandler = clientHandler;
+		
+		inNumber = 404;
+		inCharakter = 'n';
+		
+		System.out.println(clientSocket.getInetAddress().getHostName() + " has joined");
+
+		this.initDataStrm();
+		this.start();
 	}
 
-	@Override
-	public void run() {
+	private void initDataStrm() {
 		try {
 			dos = new DataOutputStream(socket.getOutputStream());
 			dis = new DataInputStream(socket.getInputStream());
 		} catch (IOException e) {
-			return;
+			e.printStackTrace();
 		}
-
-		clientHandler.connectClients();
 	}
 
-	public DataOutputStream getDos() {
-		return dos;
+	@Override
+	public void run() {
+
+		while (true) {
+			getValues();
+			sendAmount++;
+		}
+//		dos.close();
+//		dis.close();
+//		socket.close();
 	}
 
-	public DataInputStream getDis() {
-		return dis;
+	private void getValues() {
+		try {
+			inCharakter = dis.readChar();
+			inNumber = dis.readInt();
+			System.out.println(inNumber);
+			System.out.println(inCharakter);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("worked");
+	}
+
+	public void sendNumber(int i) {
+		try {
+			dos.writeInt(i);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void sendChar(char c) {
+		try {
+			dos.writeChar(c);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void sendBoolean(boolean b) {
+		try {
+			dos.writeBoolean(b);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void flush() {
+		try {
+			dos.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public int getNumber() {
+		return inNumber;
+	}
+
+	public char getChar() {
+		return inCharakter;
+	}
+	
+	public int getSendAmount() {
+		return sendAmount;
 	}
 }

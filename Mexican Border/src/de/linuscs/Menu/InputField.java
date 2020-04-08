@@ -6,9 +6,14 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.HeadlessException;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import de.linuscs.Game.Game;
 import de.linuscs.Game.GameObject;
@@ -43,6 +48,9 @@ public class InputField extends GameObject {
 	private boolean hasNotGotFM;
 
 	private int stringWidth;
+
+	private boolean str;
+	private boolean v;
 
 	public InputField(double x, double y, double width, double height) {
 		this.x = x;
@@ -115,16 +123,49 @@ public class InputField extends GameObject {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (selected) {
-			if (e.getKeyCode() != 8) {
+			if (e.getKeyCode() == 17)
+				str = false;
+
+			if (e.getKeyCode() == 86)
+				v = false;
+
+			if (e.getKeyCode() != 8 && e.getKeyCode() != 86 && e.getKeyCode() != 17) {
 				stringBuilder.append(e.getKeyChar());
 				text = stringBuilder.toString();
 				stringWidth = getStringWidth(text);
-			} else {
+			} else if (e.getKeyCode() == 8) {
 				stringBuilder.deleteCharAt(stringBuilder.length() - 1);
 				text = stringBuilder.toString();
 				stringWidth = getStringWidth(text);
 			}
 			blinkReLocate();
+		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (selected) {
+			if (e.getKeyCode() == 17)
+				str = true;
+
+			if (e.getKeyCode() == 86)
+				v = true;
+			if (str && v) {
+				String data = null;
+				try {
+					data = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+				} catch (HeadlessException e1) {
+					e1.printStackTrace();
+				} catch (UnsupportedFlavorException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+
+				stringBuilder.append(data);
+				text = stringBuilder.toString();
+				stringWidth = getStringWidth(text);
+			}
 		}
 	}
 

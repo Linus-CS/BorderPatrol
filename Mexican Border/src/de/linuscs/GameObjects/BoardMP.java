@@ -46,7 +46,7 @@ public class BoardMP extends GameObject {
 		boardHeight = (10 / 11f) * Game.HEIGHT;
 		gameEnd = false;
 
-		text = new Text((int) (15 / 110f * Game.WIDTH), (int) (5 / 11f * Game.WIDTH), (int) (6 / 110f *  Game.WIDTH), "Waiting for someone to connect ...");
+		text = new Text((int) (15 / 110f * Game.WIDTH), (int) (5 / 11f * Game.WIDTH), (int) (6 / 110f * Game.WIDTH), "Waiting for someone to connect ...");
 
 		border = new Border();
 
@@ -140,7 +140,7 @@ public class BoardMP extends GameObject {
 					player.opponentPlusOne();
 					activBox.setOpponentColor(true);
 				}
-				activatedBoxes = new ArrayList<Box>();
+				activatedBoxes.clear();
 			}
 
 			checkForVictory();
@@ -180,7 +180,7 @@ public class BoardMP extends GameObject {
 				if (!checkForActivation()) {
 					player.setYourTurn(false);
 				} else {
-					activatedBoxes = new ArrayList<Box>();
+					activatedBoxes.clear();
 				}
 			}
 
@@ -229,7 +229,7 @@ public class BoardMP extends GameObject {
 		for (double y = 0; y < boardHeight - 1; y += distance) {
 			for (double x = distance; x < boardWidth - 1; x += distance) {
 				Line tempLineVe = new Line(player);
-				
+
 				tempLineVe.setX((int) (x + boardX));
 				tempLineVe.setY((int) (y + boardY));
 				tempLineVe.setId(id++);

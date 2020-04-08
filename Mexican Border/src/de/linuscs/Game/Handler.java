@@ -62,4 +62,10 @@ public class Handler {
 			object.keyReleased(e);
 		}
 	}
+	
+	public void keyPressed(KeyEvent e) {
+		for (GameObject object : gameObjects) {
+			object.keyPressed(e);
+		}
+	}
 }
