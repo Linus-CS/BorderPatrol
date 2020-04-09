@@ -20,7 +20,7 @@ public class Server {
 	private String ip;
 	private int port;
 
-	private ArrayList<ClientThread> clients = new ArrayList<ClientThread>();
+	private ArrayList<Client> clients = new ArrayList<Client>();
 	private ArrayList<Game> games = new ArrayList<Game>();
 
 	private int counterGames;
@@ -64,7 +64,7 @@ public class Server {
 				System.out.println("Waiting for someone to connect. Request to join send.");
 				socket = serverSocket.accept();
 				System.out.println("Client " + socket.getInetAddress().getHostName() + " has accepted request to join. We have accepeted client.");
-				clients.add(new ClientThread(socket));
+				clients.add(new Client(socket));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

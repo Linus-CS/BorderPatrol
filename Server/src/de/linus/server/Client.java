@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class ClientThread extends Thread {
+public class Client extends Thread {
 
 	private Socket socket;
 
@@ -17,7 +17,7 @@ public class ClientThread extends Thread {
 	
 	private int sendAmount;
 
-	public ClientThread(Socket clientSocket) {
+	public Client(Socket clientSocket) {
 		this.socket = clientSocket;
 		
 		inNumber = 404;
@@ -52,10 +52,8 @@ public class ClientThread extends Thread {
 
 	private void getValues() {
 		try {
-			inCharakter = dis.readChar();
 			inNumber = dis.readInt();
-			System.out.println(inNumber);
-			System.out.println(inCharakter);
+			inCharakter = dis.readChar();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
